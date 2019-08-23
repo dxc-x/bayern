@@ -19,7 +19,7 @@ public class TJob {
 	/**
 	 * @param args
 	 */
-	@Scheduled(cron = "0/30 * * * * ?")
+	@Scheduled(cron = "000/600 * * * * ?")
     public void printTime() {
 		System.out.println("current time :"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 

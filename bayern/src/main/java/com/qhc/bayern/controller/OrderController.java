@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qhc.bayern.controller.entity.Order;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 
 import io.swagger.annotations.Api;
@@ -28,11 +30,11 @@ import io.swagger.annotations.ApiOperation;
 public class OrderController {
 	
 	  @ApiOperation(value="push a new order to SAP")
-	  @PostMapping(value = "/new")
+	  @PostMapping(value = "/new",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
-	  public String getUserList(@RequestBody Order order) throws Exception
+	  public Order getUserList(@RequestBody @Valid Order order) throws Exception
 	  {
-		 return order.code;
+		 return order;
 	}
 
 }
