@@ -33,7 +33,7 @@ public class OrderController {
 	  @ApiOperation(value="push a new order to SAP")
 	  @PostMapping(value = "/new",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
-	  public Order newOrder(@RequestBody @Valid Order order) throws Exception
+	  public Order newOrder(@RequestBody(required=true) @Valid Order order,@RequestBody(required=true) @Valid Form form) throws Exception
 	  {
 		 return order;
 	  }
