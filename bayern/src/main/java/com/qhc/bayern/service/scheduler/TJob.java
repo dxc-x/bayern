@@ -6,23 +6,25 @@ package com.qhc.bayern.service.scheduler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author wang@dxc.com
  *
  */
 @Service
-public class TJob {
+public class TJob implements Job{
 
-	/**
-	 * @param args
-	 */
-	@Scheduled(cron = "0 0 1 * * * ?")
-    public void printTime() {
-		System.out.println("current time :"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-
+	@Override
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+		// TODO Auto-generated method stub
+		System.out.println("TJob");
 	}
 
 }

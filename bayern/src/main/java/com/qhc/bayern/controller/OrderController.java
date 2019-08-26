@@ -27,32 +27,32 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "Order Manager in Bayern")
-@RequestMapping("/order")
+@RequestMapping("order")
 public class OrderController {
 	
 	  @ApiOperation(value="push a new order to SAP")
-	  @PostMapping(value = "/new",produces = "application/json;charset=UTF-8")
+	  @PostMapping(value = "new",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
-	  public Order newOrder(@RequestBody(required=true) @Valid Order order,@RequestBody(required=true) @Valid Form form) throws Exception
+	  public Order create(@RequestBody(required=true) @Valid Order order,@RequestBody(required=true) @Valid Form form) throws Exception
 	  {
 		 return order;
 	  }
 	  @ApiOperation(value="append a form to a order in SAP")
-	  @PostMapping(value = "/append",produces = "application/json;charset=UTF-8")
+	  @PostMapping(value = "append",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
 	  public Form appendForm(@RequestParam(value="orderCode",required=true) String code,@RequestBody @Valid Form form) throws Exception
 	  {
 		 return form;
 	  }
 	  @ApiOperation(value="update the order in SAP")
-	  @PostMapping(value = "/append",produces = "application/json;charset=UTF-8")
+	  @PostMapping(value = "update",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
 	  public Order update(@RequestBody(required=true) @Valid Order order) throws Exception
 	  {
 		 return order;
 	  }
 	  @ApiOperation(value="notify the order status from SAP")
-	  @PostMapping(value = "/status",produces = "application/json;charset=UTF-8")
+	  @PostMapping(value = "updateStatus",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
 	  public int notifyStatus(@RequestParam(value="orderCode",required=true) String code,@RequestParam int status) throws Exception
 	  {

@@ -14,21 +14,29 @@ public class Order {
 	@NotBlank(message = "code not able to be empty")
 	private String code;
 	
-	@NotBlank(message = "creator not able to be empty")
-	//@Max(value = 445,message = "too long")
-	private String creator;
+	
+	private int status;
+
+
 	public String getCode() {
 		return code;
 	}
+
+
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getCreator() {
-		return creator;
+
+
+	public int getStatus() {
+		return status;
 	}
-	public void setCreator(String creator) {
-		this.creator = creator;
+
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
+
 	
 	
 
