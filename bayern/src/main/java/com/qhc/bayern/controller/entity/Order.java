@@ -13,8 +13,9 @@ import javax.validation.constraints.NotBlank;
 public class Order {
 	@NotBlank(message = "code not able to be empty")
 	private String code;
+	
 	@NotBlank(message = "creator not able to be empty")
-	@Max(value = 445,message = "too long")
+	//@Max(value = 445,message = "too long")
 	private String creator;
 	public String getCode() {
 		return code;

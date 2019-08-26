@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
 
 import javax.validation.Valid;
@@ -32,9 +33,29 @@ public class OrderController {
 	  @ApiOperation(value="push a new order to SAP")
 	  @PostMapping(value = "/new",produces = "application/json;charset=UTF-8")
 	  @ResponseStatus(HttpStatus.OK)
-	  public Order getUserList(@RequestBody @Valid Order order) throws Exception
+	  public Order newOrder(@RequestBody @Valid Order order) throws Exception
 	  {
 		 return order;
-	}
-
+	  }
+	  @ApiOperation(value="append a form to a order in SAP")
+	  @PostMapping(value = "/append",produces = "application/json;charset=UTF-8")
+	  @ResponseStatus(HttpStatus.OK)
+	  public Form appendForm(@RequestParam(value="orderCode",required=true) String code,@RequestBody @Valid Form form) throws Exception
+	  {
+		 return form;
+	  }
+	  @ApiOperation(value="update the order in SAP")
+	  @PostMapping(value = "/append",produces = "application/json;charset=UTF-8")
+	  @ResponseStatus(HttpStatus.OK)
+	  public Order update(@RequestBody(required=true) @Valid Order order) throws Exception
+	  {
+		 return order;
+	  }
+	  @ApiOperation(value="notify the order status from SAP")
+	  @PostMapping(value = "/status",produces = "application/json;charset=UTF-8")
+	  @ResponseStatus(HttpStatus.OK)
+	  public int notifyStatus(@RequestParam(value="orderCode",required=true) String code,@RequestParam int status) throws Exception
+	  {
+		 return status;
+	  }
 }
