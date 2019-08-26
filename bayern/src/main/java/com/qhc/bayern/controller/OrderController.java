@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Order Manager")
+@Api(value = "Order Manager in Bayern")
 @RequestMapping("/order")
 public class OrderController {
 	
