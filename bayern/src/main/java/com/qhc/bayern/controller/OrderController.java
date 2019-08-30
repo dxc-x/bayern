@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Order Manager in Bayern")
+@Api(value = "Order Management in Bayern")
 @RequestMapping("order")
 public class OrderController {
 	  @Autowired
