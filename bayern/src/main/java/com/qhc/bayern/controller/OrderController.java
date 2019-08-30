@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
+import com.qhc.bayern.service.ApplicationConfiguration;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import io.swagger.annotations.Api;
@@ -29,6 +32,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Order Manager in Bayern")
 @RequestMapping("order")
 public class OrderController {
+	  @Autowired
+	  ApplicationConfiguration configService;
 	
 	  @ApiOperation(value="push a new order to SAP")
 	  @PostMapping(value = "new",produces = "application/json;charset=UTF-8")
@@ -58,4 +63,15 @@ public class OrderController {
 	  {
 		 return status;
 	  }
+	  
+	  @ApiOperation(value="get config about frye server url")
+	  @GetMapping(value = "fryeUrl")
+	  @ResponseStatus(HttpStatus.OK)
+	  public String getFryeServer() throws Exception
+	  {
+		 
+		 return configService.getFryeServer();
+	  }
+	  
+	  
 }

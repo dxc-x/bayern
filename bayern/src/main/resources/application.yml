@@ -6,3 +6,11 @@ spring:
     devtools:
         restart:
           enabled: true 
+qhc:
+    soap: 
+        server: 127
+        port:         
+    frye: 
+        server: localhost
+        port: 8801
+   
