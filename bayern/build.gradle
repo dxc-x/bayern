@@ -27,18 +27,13 @@ dependencies {
 	//implementation 'org.springframework.boot:spring-boot-starter-cache'
 	//implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-mail'
 	//implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	//implementation 'org.springframework.boot:spring-boot-starter-quartz'
+	implementation 'org.springframework.boot:spring-boot-starter-quartz'
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
-	//implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	//for thymeleaf
-	//implementation 'net.sourceforge.nekohtml:nekohtml:1.9.22'
 	//hot deployment
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	//implementation 'org.springframework.boot:spring-boot-starter-web'
 	//implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
 	//swagger
 	implementation "io.springfox:springfox-swagger2:2.9.2"
@@ -52,6 +47,9 @@ dependencies {
 	//resolve the swagger issue
 	implementation "org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE"
 	implementation "org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE"
+	
+	//restfule client: webclient
+	implementation "org.springframework.boot:spring-boot-starter-webflux"
 	
 	
 	runtimeOnly 'mysql:mysql-connector-java'

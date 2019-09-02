@@ -1,0 +1,16 @@
+server: 
+    servlet:
+        context-path : /bayern 
+    port: 8804 
+spring:
+    devtools:
+        restart:
+          enabled: true 
+qhc:
+    soap: 
+        server: 127
+        port:         
+    frye: 
+        server: localhost
+        port: 8801
+   
