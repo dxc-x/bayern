@@ -4,10 +4,14 @@
 package com.qhc.bayern.service;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
+
+import com.qhc.bayern.service.exception.ExternalServerInternalException;
+import com.qhc.bayern.service.exception.URLNotFoundException;
 
 import reactor.core.publisher.Mono;
 
@@ -17,7 +21,7 @@ import reactor.core.publisher.Mono;
  *
  */
 public abstract class AbsFryeService<T> {
-	
+
 	private WebClient webClient;
 
 	protected Builder getBuilder() {
@@ -41,15 +45,24 @@ public abstract class AbsFryeService<T> {
 	public void putJason(String url, T params, Class<T> T) {
 
 		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON)
-				.bodyValue(params).retrieve().bodyToMono(String.class);
+		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(String.class);
 		response.block();
 	}
+
 	public void postJason(String url, T params, Class<T> T) {
 
 		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON)
-				.bodyValue(params).retrieve().bodyToMono(String.class);
+		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(String.class);
 		response.block();
 	}
 

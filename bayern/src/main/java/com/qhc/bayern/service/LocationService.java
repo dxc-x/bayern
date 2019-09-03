@@ -33,10 +33,9 @@ public class LocationService extends AbsFryeService {
 	 * save the sales groups with sales offices to DB in Frye
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
-		
-	//	this.get(configService.getFryeServer(),"location/test");
+	
 		this.putJason(configService.getFryeServer()+SALES_OFFICES, groups,SalesGroup.class);
-//		System.out.println("updateStatus:" + resp.toString());
+
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class LocationService extends AbsFryeService {
 	public List<SalesGroup> getSalesgroup() {
 		List<SalesGroup> rl = new ArrayList();
 		SalesGroup sg1 = new SalesGroup();
-		sg1.setCode("S01");
+		sg1.setCode("S001");
 		sg1.setName("青岛");
 		sg1.setOfficeCode("Z001");
 		sg1.setOfficeName("东区");
