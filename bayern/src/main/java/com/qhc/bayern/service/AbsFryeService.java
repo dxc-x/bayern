@@ -17,6 +17,8 @@ import reactor.core.publisher.Mono;
  *
  */
 public abstract class AbsFryeService<T> {
+	
+	private WebClient webClient;
 
 	protected Builder getBuilder() {
 		WebClient.Builder webClientBuilder = WebClient.builder()
@@ -36,10 +38,17 @@ public abstract class AbsFryeService<T> {
 		};
 	}
 
-	public void putFromJason(String url, T params, Class<T> T) {
+	public void putJason(String url, T params, Class<T> T) {
 
-		WebClient webClient = getBuilder().baseUrl(url).build();
+		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON)
+				.bodyValue(params).retrieve().bodyToMono(String.class);
+		response.block();
+	}
+	public void postJason(String url, T params, Class<T> T) {
+
+		webClient = getBuilder().baseUrl(url).build();
+		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(params).retrieve().bodyToMono(String.class);
 		response.block();
 	}
