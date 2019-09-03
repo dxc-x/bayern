@@ -4,19 +4,19 @@
 package com.qhc.bayern.service;
 
 import org.springframework.http.HttpHeaders;
-
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
 import reactor.core.publisher.Mono;
 
 /**
  * @author wang@dxc.com
+ * @param <T>
  *
  */
-public abstract class AbsFryeService {
+public abstract class AbsFryeService<T> {
 
 	protected Builder getBuilder() {
 		WebClient.Builder webClientBuilder = WebClient.builder()
@@ -36,13 +36,11 @@ public abstract class AbsFryeService {
 		};
 	}
 
-	public void uploadFromJason(String server, String path, Object t) {
+	public void uploadFromJason(String server, String path, T params,Class<T> T) {
 
 		WebClient webClient = getBuilder().baseUrl(server + path).build();
-		System.out.println("webclient");
-		ResponseSpec response = webClient.put().uri(path).retrieve();
-
-		System.out.println(response);
+		Mono<String> response = webClient.put().uri(server+path).contentType(MediaType.APPLICATION_JSON).bodyValue(params).retrieve().bodyToMono(String.class);
+		System.out.println(response.block());
 	}
 	
 	public String get(String server, String path) {
@@ -50,7 +48,7 @@ public abstract class AbsFryeService {
 		System.out.println(path);
 		WebClient webClient = getBuilder().baseUrl(server + path).build();
 		System.out.println("webclient");
-		Mono<String> response = webClient.get().uri(path).retrieve().bodyToMono(String.class);
+		Mono<String> response = webClient.get().uri(server+path).retrieve().bodyToMono(String.class);
 		return response.block();
 	}
 

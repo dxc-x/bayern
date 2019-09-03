@@ -34,8 +34,8 @@ public class LocationService extends AbsFryeService {
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
 		
-		this.get(configService.getFryeServer(),"location/test");
-//		this.uploadFromJason(configService.getFryeServer(), SALES_OFFICES, groups);
+	//	this.get(configService.getFryeServer(),"location/test");
+		this.uploadFromJason(configService.getFryeServer(), SALES_OFFICES, groups,SalesGroup.class);
 //		System.out.println("updateStatus:" + resp.toString());
 	}
 
