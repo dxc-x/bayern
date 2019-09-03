@@ -11,6 +11,8 @@ qhc:
         server: 127
         port:         
     frye: 
+        protocal: http
         server: localhost
         port: 8801
+        application: frye
    

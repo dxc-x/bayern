@@ -20,7 +20,7 @@ public class ApplicationConfiguration {
 
 	public String getFryeServer(){
 
-		return apConfig.getFryeServer() + ":" + String.valueOf(apConfig.getFryePort());
+		return apConfig.getProtocal()+"://"+apConfig.getFryeServer() + ":" + String.valueOf(apConfig.getFryePort()+"/"+apConfig.getApplication()+"/");
 	}
 
 }

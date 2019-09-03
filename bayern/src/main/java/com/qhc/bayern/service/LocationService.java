@@ -27,14 +27,15 @@ public class LocationService extends AbsFryeService {
 	@Autowired
 	ApplicationConfiguration configService;
 	
-	private final static String SALES_OFFICES = "/location/uploadSalesOffice";
+	private final static String SALES_OFFICES = "location/salesOffices";
 
 	/**
 	 * save the sales groups with sales offices to DB in Frye
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
-
-		this.upLoadByJason(configService.getFryeServer(), SALES_OFFICES, groups);
+		
+		this.get(configService.getFryeServer(),"location/test");
+//		this.uploadFromJason(configService.getFryeServer(), SALES_OFFICES, groups);
 //		System.out.println("updateStatus:" + resp.toString());
 	}
 

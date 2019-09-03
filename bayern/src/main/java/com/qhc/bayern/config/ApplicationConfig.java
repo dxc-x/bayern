@@ -18,6 +18,12 @@ public class ApplicationConfig {
 	
 	@Value("${qhc.frye.port}")
 	int fryePort;
+	
+	@Value("${qhc.frye.application}")
+	String application;
+	
+	@Value("${qhc.frye.protocal}")
+	String protocal;
 
 	public String getFryeServer() {
 		return fryeServer;
@@ -35,8 +41,21 @@ public class ApplicationConfig {
 		this.fryePort = fryePort;
 	}
 
+	public String getApplication() {
+		return application;
+	}
 
-	
+	public void setApplication(String application) {
+		this.application = application;
+	}
+
+	public String getProtocal() {
+		return protocal;
+	}
+
+	public void setProtocal(String protocal) {
+		this.protocal = protocal;
+	}
 	
 
 }

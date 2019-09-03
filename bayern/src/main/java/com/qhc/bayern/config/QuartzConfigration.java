@@ -33,7 +33,7 @@ public class QuartzConfigration {
 
     @Bean
     public Trigger myJobTrigger() {
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().repeatMinutelyForever(1);
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().repeatHourlyForever(1);
 
         return TriggerBuilder.newTrigger()
                 .forJob(myJobDetail())
@@ -45,7 +45,7 @@ public class QuartzConfigration {
 	
     @Bean
     public Trigger CronJobTrigger() {
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/10 * * * * ?");
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("* * 0/10 * * ?");
 
         return TriggerBuilder.newTrigger()
                 .forJob(myCronJobDetail())
