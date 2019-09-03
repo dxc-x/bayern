@@ -36,19 +36,20 @@ public abstract class AbsFryeService<T> {
 		};
 	}
 
-	public void uploadFromJason(String server, String path, T params,Class<T> T) {
+	public void putFromJason(String url, T params, Class<T> T) {
 
-		WebClient webClient = getBuilder().baseUrl(server + path).build();
-		Mono<String> response = webClient.put().uri(server+path).contentType(MediaType.APPLICATION_JSON).bodyValue(params).retrieve().bodyToMono(String.class);
-		System.out.println(response.block());
+		WebClient webClient = getBuilder().baseUrl(url).build();
+		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON)
+				.bodyValue(params).retrieve().bodyToMono(String.class);
+		response.block();
 	}
-	
+
 	public String get(String server, String path) {
 		System.out.println(server);
 		System.out.println(path);
 		WebClient webClient = getBuilder().baseUrl(server + path).build();
 		System.out.println("webclient");
-		Mono<String> response = webClient.get().uri(server+path).retrieve().bodyToMono(String.class);
+		Mono<String> response = webClient.get().uri(server + path).retrieve().bodyToMono(String.class);
 		return response.block();
 	}
 
