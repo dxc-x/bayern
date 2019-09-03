@@ -23,20 +23,19 @@ import reactor.core.publisher.Mono;
  *
  */
 @Service
-public class LocalService extends AbsFryeService {
+public class LocationService extends AbsFryeService {
 	@Autowired
 	ApplicationConfiguration configService;
+	
+	private final static String SALES_OFFICES = "/location/uploadSalesOffice";
 
 	/**
 	 * save the sales groups with sales offices to DB in Frye
 	 */
-	public void saveToDB(List<SalesGroup> groups) throws Exception {
+	public void save(List<SalesGroup> groups) throws Exception {
 
-		URI uri = new URI(configService.getFryeServer() + this.SALES_OFFICES);
-		RequestBodySpec req = webClient.post().uri(uri);
-		ResponseSpec resp = req.retrieve();
-		//Mono<SalesGroup> mono = resp.bodyToMono(SalesGroup.class);
-		System.out.println("updateStatus:" + resp.toString());
+		this.upLoadByJason(configService.getFryeServer(), SALES_OFFICES, groups);
+//		System.out.println("updateStatus:" + resp.toString());
 	}
 
 	/**
