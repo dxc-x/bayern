@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
-import com.qhc.bayern.service.ApplicationConfiguration;
 
 import javax.validation.Valid;
 
@@ -33,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("order")
 public class OrderController {
 	  @Autowired
-	  ApplicationConfiguration configService;
+	  ApplicationConfig config;
 	
 	  @ApiOperation(value="push a new order to SAP")
 	  @PostMapping(value = "new",produces = "application/json;charset=UTF-8")
@@ -70,7 +69,7 @@ public class OrderController {
 	  public String getFryeServer() throws Exception
 	  {
 		 
-		 return configService.getFryeServer();
+		 return config.getFryeServer();
 	  }
 	  
 	  

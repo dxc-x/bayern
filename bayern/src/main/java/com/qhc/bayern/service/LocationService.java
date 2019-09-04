@@ -16,11 +16,9 @@ import com.qhc.bayern.controller.entity.SalesGroup;
  */
 @Service
 public class LocationService {
-	@Autowired
-	ApplicationConfiguration configService;
 	
 	@Autowired
-	FryeService fryeService;
+	FryeService frye;
 	
 	private final static String SALES_OFFICES = "location/salesOffices";
 
@@ -29,7 +27,7 @@ public class LocationService {
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
 	
-		fryeService.putJason(configService.getFryeServer()+SALES_OFFICES, groups,SalesGroup.class);
+		frye.putJason(SALES_OFFICES, groups);//,SalesGroup.class);
 
 	}
 

@@ -13,17 +13,22 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 public class ApplicationConfig {
+
 	@Value("${qhc.frye.server}")
 	String fryeServer;
-	
+
 	@Value("${qhc.frye.port}")
 	int fryePort;
-	
+
 	@Value("${qhc.frye.application}")
 	String application;
-	
+
 	@Value("${qhc.frye.protocal}")
 	String protocal;
+
+	public final static String SIGN_PROTOCAL = "://";
+	public final static String SIGN_SEGAMENT = "/";
+	public final static String SIGN_PORT = ":";
 
 	public String getFryeServer() {
 		return fryeServer;
@@ -57,5 +62,11 @@ public class ApplicationConfig {
 		this.protocal = protocal;
 	}
 	
+	//
+	public String getFryeURL() {
+
+		return this.getProtocal() + SIGN_PROTOCAL + this.getFryeServer() + SIGN_PORT
+				+ String.valueOf(this.getFryePort()) + SIGN_SEGAMENT + this.getApplication() + SIGN_SEGAMENT;
+	}
 
 }

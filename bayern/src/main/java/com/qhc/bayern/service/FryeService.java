@@ -3,13 +3,18 @@
  */
 package com.qhc.bayern.service;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
 
+import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.service.exception.ExternalServerInternalException;
 import com.qhc.bayern.service.exception.URLNotFoundException;
 
@@ -20,7 +25,11 @@ import reactor.core.publisher.Mono;
  * @param <T>
  *
  */
-public abstract class FryeService<T> {
+@Service
+public class FryeService<T> {
+	
+	@Autowired
+	ApplicationConfig config;
 
 	private WebClient webClient;
 
@@ -42,8 +51,8 @@ public abstract class FryeService<T> {
 		};
 	}
 
-	public void putJason(String url, T params, Class<T> T) {
-
+	public void putJason(String path, T params) {
+		String url = config.getFryeServer()+path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -54,8 +63,9 @@ public abstract class FryeService<T> {
 		response.block();
 	}
 
-	public void postJason(String url, T params, Class<T> T) {
-
+	public void postJason(String path, T params) {
+		
+		String url = config.getFryeServer()+path;
 		webClient = getBuilder().baseUrl(url).build();
 		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
@@ -66,12 +76,15 @@ public abstract class FryeService<T> {
 		response.block();
 	}
 
-	public String get(String server, String path) {
-		System.out.println(server);
-		System.out.println(path);
-		WebClient webClient = getBuilder().baseUrl(server + path).build();
-		System.out.println("webclient");
-		Mono<String> response = webClient.get().uri(server + path).retrieve().bodyToMono(String.class);
+	public Date getLastUpdatedDate(String path,String params) {
+		String url = config.getFryeServer()+path;
+		WebClient webClient = getBuilder().baseUrl(url).build();
+		Mono<Date> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+				.retrieve()
+				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
+				.onStatus(HttpStatus::is5xxServerError,
+						clientResponse -> Mono.error(new ExternalServerInternalException()))
+				.bodyToMono(Date.class);
 		return response.block();
 	}
 
