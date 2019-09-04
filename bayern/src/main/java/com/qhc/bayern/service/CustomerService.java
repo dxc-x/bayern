@@ -24,15 +24,17 @@ public class CustomerService {
 	FryeService fryeService;
 	
 
-	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate/";
-	private final static String CODE_CUSTOMER = "59870645008146f9938f7e8818031778";
+	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate";
+	
+	private final static String PUT_CUSTOMER = "customer";
+	
 	/**
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public Date getLastUpdate() throws Exception {
-		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE, CODE_CUSTOMER);
+		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
 		return new Date();
 
 	}
@@ -56,7 +58,7 @@ public class CustomerService {
 	 */
 	public void save(List<Customer> customers) throws Exception {
 		
-		fryeService.putJason(LAST_UPDATED_DATE, customers);
+		fryeService.putJason(PUT_CUSTOMER, customers);
 
 	}
 	
