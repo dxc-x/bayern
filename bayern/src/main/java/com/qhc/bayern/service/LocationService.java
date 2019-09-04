@@ -1,31 +1,26 @@
 package com.qhc.bayern.service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 
-import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.SalesGroup;
 
-import reactor.core.publisher.Mono;
 
 /**
  * @author wang@dxc.com
  *
  */
 @Service
-public class LocationService extends AbsFryeService {
+public class LocationService {
 	@Autowired
 	ApplicationConfiguration configService;
+	
+	@Autowired
+	FryeService fryeService;
 	
 	private final static String SALES_OFFICES = "location/salesOffices";
 
@@ -34,7 +29,7 @@ public class LocationService extends AbsFryeService {
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
 	
-		this.putJason(configService.getFryeServer()+SALES_OFFICES, groups,SalesGroup.class);
+		fryeService.putJason(configService.getFryeServer()+SALES_OFFICES, groups,SalesGroup.class);
 
 	}
 

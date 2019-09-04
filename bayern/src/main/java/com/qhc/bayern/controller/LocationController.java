@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Location Management in Bayern")
+@Api(value = "Location data management in Bayern")
 @RequestMapping("location")
 public class LocationController {
 

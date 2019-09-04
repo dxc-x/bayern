@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
  * @param <T>
  *
  */
-public abstract class AbsFryeService<T> {
+public abstract class FryeService<T> {
 
 	private WebClient webClient;
 
