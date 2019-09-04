@@ -38,7 +38,7 @@ public class LocationController {
 	@GetMapping(value = "offices")
 	@ResponseStatus(HttpStatus.OK)
 	public void getSalesOffices() throws Exception {
-		List<SalesGroup> temp = locationService.getSalesgroup();
+		List<SalesGroup> temp = locationService.getSalesgroupFromSAP();
 		locationService.save(temp);
 	}
 

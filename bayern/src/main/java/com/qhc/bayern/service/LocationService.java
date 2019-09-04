@@ -20,7 +20,7 @@ public class LocationService {
 	@Autowired
 	FryeService frye;
 	
-	private final static String SALES_OFFICES = "location/salesOffices";
+	private final static String SALES_OFFICES = "location/salesOffice";
 
 	/**
 	 * save the sales groups with sales offices to DB in Frye
@@ -35,10 +35,10 @@ public class LocationService {
 	 * 
 	 * @return sale office and sale group from sap
 	 */
-	public List<SalesGroup> getSalesgroup() {
+	public List<SalesGroup> getSalesgroupFromSAP() {
 		List<SalesGroup> rl = new ArrayList();
 		SalesGroup sg1 = new SalesGroup();
-		sg1.setCode("S001");
+		sg1.setCode("S01");
 		sg1.setName("青岛");
 		sg1.setOfficeCode("Z001");
 		sg1.setOfficeName("东区");

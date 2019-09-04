@@ -3,6 +3,7 @@
  */
 package com.qhc.bayern.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +19,13 @@ import com.qhc.bayern.controller.entity.SalesGroup;
  */
 @Service
 public class CustomerService {
-	
-	
-	
+		
 	@Autowired
 	FryeService fryeService;
 	
-	private final static String SALES_OFFICES = "customer";
-	private final static String LAST_UPDATED_DATE = "lastDate";
-	private final static String CODE_CUSTOMER = "59870645-0081-46f9-938f-7e8818031778";
+
+	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate/";
+	private final static String CODE_CUSTOMER = "59870645008146f9938f7e8818031778";
 	/**
 	 * 
 	 * @return
@@ -34,8 +33,21 @@ public class CustomerService {
 	 */
 	public Date getLastUpdate() throws Exception {
 		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE, CODE_CUSTOMER);
-		return null;
+		return new Date();
 
+	}
+	public List<Customer> getCustomersFromSap(Date lastUpdate){
+		List<Customer> clist = new ArrayList<Customer>();
+		Customer c1 = new Customer();
+		c1.setCode("1234567812345678");
+		c1.setCode("customer1");
+		Customer c2 = new Customer();
+		c2.setCode("1234567802345678");
+		c2.setCode("customer2");
+		
+		clist.add(c1);
+		clist.add(c2);
+		return clist;
 	}
 	/**
 	 * 
@@ -44,7 +56,7 @@ public class CustomerService {
 	 */
 	public void save(List<Customer> customers) throws Exception {
 		
-		fryeService.putJason(SALES_OFFICES, customers);
+		fryeService.putJason(LAST_UPDATED_DATE, customers);
 
 	}
 	

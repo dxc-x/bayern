@@ -44,7 +44,7 @@ public class FryeService<T> {
 
 	private ExchangeFilterFunction logRequest() {
 		return (clientRequest, next) -> {
-			System.out.println("Request: {} {}" + clientRequest.method() + clientRequest.url());
+			System.out.println("Request: " + clientRequest.method() +" : "+ clientRequest.url());
 			clientRequest.headers()
 					.forEach((name, values) -> values.forEach(value -> System.out.println("{}={}" + name + value)));
 			return next.exchange(clientRequest);
@@ -52,9 +52,9 @@ public class FryeService<T> {
 	}
 
 	public void putJason(String path, T params) {
-		String url = config.getFryeServer()+path;
-		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.put().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
@@ -65,9 +65,8 @@ public class FryeService<T> {
 
 	public void postJason(String path, T params) {
 		
-		String url = config.getFryeServer()+path;
-		webClient = getBuilder().baseUrl(url).build();
-		Mono<String> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		Mono<String> response = webClient.post().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
@@ -75,11 +74,14 @@ public class FryeService<T> {
 				.bodyToMono(String.class);
 		response.block();
 	}
-
+	/**
+	 * get last updated date by the business code defined in system
+	 */
 	public Date getLastUpdatedDate(String path,String params) {
-		String url = config.getFryeServer()+path;
-		WebClient webClient = getBuilder().baseUrl(url).build();
-		Mono<Date> response = webClient.post().uri(url).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
+		
+		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
+		
+		Mono<Date> response = webClient.get().uri(path,params)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
