@@ -42,10 +42,21 @@ public class CustomerService {
 		List<Customer> clist = new ArrayList<Customer>();
 		Customer c1 = new Customer();
 		c1.setCode("1234567812345678");
-		c1.setCode("customer1");
+		c1.setName("customer1");
+		c1.setChangedDate(new Date(1008105271098L));
+		c1.setAddress("address");
+		c1.setClazzCode("01");
+		c1.setGroupCode("Z001");
+		c1.setLevelCode("0001");
+		
 		Customer c2 = new Customer();
 		c2.setCode("1234567802345678");
-		c2.setCode("customer2");
+		c2.setName("customer2");
+		c1.setChangedDate(new Date(1008105271098L));
+		c1.setAddress("address");
+		c1.setClazzCode("01");
+		c1.setGroupCode("Z001");
+		c1.setLevelCode("0001");
 		
 		clist.add(c1);
 		clist.add(c2);
