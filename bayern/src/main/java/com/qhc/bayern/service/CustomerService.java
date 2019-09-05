@@ -22,7 +22,7 @@ public class CustomerService {
 
 	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate";
 
-	private final static String PUT_CUSTOMER = "customer/a";
+	private final static String PUT_CUSTOMER = "customer";
 
 	@Autowired
 	FryeService fryeService;

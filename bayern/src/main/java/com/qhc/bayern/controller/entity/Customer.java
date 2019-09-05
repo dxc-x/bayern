@@ -16,6 +16,8 @@ public class Customer extends AbsConObject {
 	private String groupCode;
 	private String clazzCode;
 	private String levelCode;
+	private String affiliation;
+	
 	public Date getChangedDate() {
 		return changedDate;
 	}
@@ -46,7 +48,11 @@ public class Customer extends AbsConObject {
 	public void setLevelCode(String levelCode) {
 		this.levelCode = levelCode;
 	}
+	public String getAffiliation() {
+		return affiliation;
+	}
+	public void setAffiliation(String affiliation) {
+		this.affiliation = affiliation;
+	}
 	
-	
-
 }
