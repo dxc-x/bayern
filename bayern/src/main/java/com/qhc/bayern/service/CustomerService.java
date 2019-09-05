@@ -19,15 +19,14 @@ import com.qhc.bayern.controller.entity.SalesGroup;
  */
 @Service
 public class CustomerService {
-		
-	@Autowired
-	FryeService fryeService;
-	
 
 	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate";
-	
-	private final static String PUT_CUSTOMER = "customer";
-	
+
+	private final static String PUT_CUSTOMER = "customer/a";
+
+	@Autowired
+	FryeService fryeService;
+
 	/**
 	 * 
 	 * @return
@@ -38,7 +37,8 @@ public class CustomerService {
 		return new Date();
 
 	}
-	public List<Customer> getCustomersFromSap(Date lastUpdate){
+
+	public List<Customer> getCustomersFromSap(Date lastUpdate) {
 		List<Customer> clist = new ArrayList<Customer>();
 		Customer c1 = new Customer();
 		c1.setCode("1234567812345678");
@@ -48,30 +48,30 @@ public class CustomerService {
 		c1.setClazzCode("01");
 		c1.setGroupCode("Z001");
 		c1.setLevelCode("0001");
-		
+
 		Customer c2 = new Customer();
 		c2.setCode("1234567802345678");
 		c2.setName("customer2");
-		c1.setChangedDate(new Date(1008105271098L));
-		c1.setAddress("address");
-		c1.setClazzCode("01");
-		c1.setGroupCode("Z001");
-		c1.setLevelCode("0001");
-		
+		c2.setChangedDate(new Date(1008105271098L));
+		c2.setAddress("address");
+		c2.setClazzCode("01");
+		c2.setGroupCode("Z001");
+		c2.setLevelCode("0001");
+
 		clist.add(c1);
 		clist.add(c2);
 		return clist;
 	}
+
 	/**
 	 * 
 	 * @param groups
 	 * @throws Exception
 	 */
 	public void save(List<Customer> customers) throws Exception {
-		
+
 		fryeService.putJason(PUT_CUSTOMER, customers);
 
 	}
-	
 
 }
