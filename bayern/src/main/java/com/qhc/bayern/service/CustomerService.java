@@ -48,6 +48,8 @@ public class CustomerService {
 		c1.setClazzCode("01");
 		c1.setGroupCode("Z001");
 		c1.setLevelCode("0001");
+		c1.setAffiliationCode("0011");
+		c1.setAffiliationName("0011name");
 
 		Customer c2 = new Customer();
 		c2.setCode("1234567802345678");
@@ -57,6 +59,8 @@ public class CustomerService {
 		c2.setClazzCode("01");
 		c2.setGroupCode("Z001");
 		c2.setLevelCode("0001");
+		c2.setAffiliationCode("0012");
+		c2.setAffiliationName("0012name");
 
 		clist.add(c1);
 		clist.add(c2);
