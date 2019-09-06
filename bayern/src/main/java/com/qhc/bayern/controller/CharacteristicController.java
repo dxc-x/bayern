@@ -3,7 +3,6 @@
  */
 package com.qhc.bayern.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qhc.bayern.controller.entity.Currency;
-import com.qhc.bayern.controller.entity.Customer;
+import com.qhc.bayern.service.CharacteristicService;
 import com.qhc.bayern.service.CustomerService;
 
 import io.swagger.annotations.Api;
@@ -24,16 +23,15 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Currency data management in Bayern")
-public class CurrencyController {
+@Api(value = "Characteristic data management in Bayern")
+public class CharacteristicController {
 	@Autowired
-	CustomerService customerService;
+	CharacteristicService charaService;
 	
 	@ApiOperation(value = "retrieve customer data from SAP then save to DB")
 	@GetMapping(value = "currency")
 	@ResponseStatus(HttpStatus.OK)
 	public void getCustomers() throws Exception {
-		List<Currency> temp = customerService.getCurrencyFromSap();
-		customerService.uploadCurrency(temp);
+		
 	}
 }

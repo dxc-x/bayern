@@ -8,7 +8,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.qhc.bayern.service.ConfirugrableService;
+import com.qhc.bayern.service.MaterialService;
 import com.qhc.bayern.service.OrderService;
 
 /**
