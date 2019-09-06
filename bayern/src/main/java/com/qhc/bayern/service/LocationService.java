@@ -27,7 +27,7 @@ public class LocationService {
 	 */
 	public void save(List<SalesGroup> groups) throws Exception {
 	
-		frye.putJason(SALES_OFFICES, groups);//,SalesGroup.class);
+		frye.putJason(SALES_OFFICES, groups);
 
 	}
 
