@@ -28,7 +28,7 @@ public class CustomerService {
 	private final static String PUT_CURRENCY = "currency";
 
 	@Autowired
-	FryeService fryeService;
+	private FryeService fryeService;
 
 	/**
 	 * 

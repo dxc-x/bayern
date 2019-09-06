@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qhc.bayern.controller.entity.Clazz;
 import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.service.CharacteristicService;
 import com.qhc.bayern.service.CustomerService;
@@ -23,15 +24,23 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Characteristic data management in Bayern")
+@Api(value = "Characteristic and Class data management in Bayern")
 public class CharacteristicController {
 	@Autowired
 	CharacteristicService charaService;
 	
-	@ApiOperation(value = "retrieve customer data from SAP then save to DB")
-	@GetMapping(value = "currency")
+	@ApiOperation(value = "retrieve class data and Characteristic from SAP then save to DB")
+	@GetMapping(value = "class")
 	@ResponseStatus(HttpStatus.OK)
-	public void getCustomers() throws Exception {
+	public void getClasses() throws Exception {
+		List<Clazz> clazz = charaService.getClassesAndCharacteristicFromSap();
+		charaService.uploadClassAndCharacteristic(clazz);
+	}
+	
+	@ApiOperation(value = "retrieve Characteristic value data from SAP then save to DB")
+	@GetMapping(value = "CharacteristicValue")
+	@ResponseStatus(HttpStatus.OK)
+	public void getCharacteristicValue() throws Exception {
 		
 	}
 }
