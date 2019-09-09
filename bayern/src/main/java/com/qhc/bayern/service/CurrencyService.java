@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qhc.bayern.controller.entity.Currency;
+import com.qhc.bayern.controller.entity.Incoterm;
 
 /**
  * @author wang@dxc.com
@@ -20,9 +21,10 @@ import com.qhc.bayern.controller.entity.Currency;
 public class CurrencyService {
 
 	private final static String PUT_CURRENCY = "currency";
+	private final static String PUT_INCOTERM = "incoterm";
 
 	@Autowired
-	private FryeService<List<Currency>> fryeService;
+	private FryeService<List<?>> fryeService;
 	/**
 	 * 
 	 * @param groups
@@ -54,5 +56,33 @@ public class CurrencyService {
 		clist.add(c1);
 		clist.add(c2);
 		return clist;
+	}
+	/**
+	 * 
+	 * @param groups
+	 * @throws Exception
+	 */
+	public void uploadIncoterm(List<Incoterm> incoterm) throws Exception {
+
+		fryeService.putJason(PUT_INCOTERM, incoterm);
+
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Incoterm> getIncotermFromSap() {
+		List<Incoterm> ilist = new ArrayList<Incoterm>();
+		Incoterm i1 = new Incoterm();
+		i1.setCode("CRZ");
+		i1.setName("asd");		
+		ilist.add(i1);
+		
+		Incoterm i2 = new Incoterm();
+		i2.setCode("REW");
+		i2.setName("name");
+		ilist.add(i2);
+		
+		return ilist;
 	}
 }
