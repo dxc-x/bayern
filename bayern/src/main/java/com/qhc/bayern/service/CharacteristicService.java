@@ -21,7 +21,7 @@ import com.qhc.bayern.controller.entity.Customer;
 @Service
 public class CharacteristicService {
 	private final static String PUT_CLASS = "class";
-	private final static String PUT_CHARACTERISTIC_VALUE= "CharacteristicValue";
+	private final static String PUT_CHARACTERISTIC_VALUE= "characteristic";
 	@Autowired
 	private FryeService fryeService;
 	
@@ -61,6 +61,7 @@ public class CharacteristicService {
 		c2.setCode("02");
 		c2.setName("value2");
 		c2.setCharacteristicCode("100002000030000400005000060000");
+		c2.setCharacteristicName("c1");
 		c2.setName("c1");
 		c2.setClazzCode("100000200000300000");
 		
