@@ -18,7 +18,7 @@ import com.qhc.bayern.controller.entity.SalesGroup;
 public class LocationService {
 	
 	@Autowired
-	FryeService frye;
+	private FryeService<List<SalesGroup>> frye;
 	
 	private final static String SALES_OFFICES = "location/salesOffice";
 
@@ -36,7 +36,7 @@ public class LocationService {
 	 * @return sale office and sale group from sap
 	 */
 	public List<SalesGroup> getSalesgroupFromSAP() {
-		List<SalesGroup> rl = new ArrayList();
+		List<SalesGroup> rl = new ArrayList<SalesGroup>();
 		SalesGroup sg1 = new SalesGroup();
 		sg1.setCode("S01");
 		sg1.setName("青岛");

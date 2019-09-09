@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Customer;
+import com.qhc.bayern.service.CurrencyService;
 import com.qhc.bayern.service.CustomerService;
 
 import io.swagger.annotations.Api;
@@ -27,13 +28,13 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Currency data management in Bayern")
 public class CurrencyController {
 	@Autowired
-	CustomerService customerService;
+	private CurrencyService currencyService;
 	
 	@ApiOperation(value = "retrieve customer data from SAP then save to DB")
 	@GetMapping(value = "currency")
 	@ResponseStatus(HttpStatus.OK)
-	public void getCustomers() throws Exception {
-		List<Currency> temp = customerService.getCurrencyFromSap();
-		customerService.uploadCurrency(temp);
+	public void getCurrency() throws Exception {
+		List<Currency> temp = currencyService.getCurrencyFromSap(new Date());
+		currencyService.uploadCurrency(temp);
 	}
 }

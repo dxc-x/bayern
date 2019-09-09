@@ -10,9 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Customer;
-import com.qhc.bayern.controller.entity.SalesGroup;
 
 /**
  * @author wang@dxc.com
@@ -24,11 +22,10 @@ public class CustomerService {
 	private final static String LAST_UPDATED_DATE = "customer/lastUpdateDate";
 
 	private final static String PUT_CUSTOMER = "customer";
-	
-	private final static String PUT_CURRENCY = "currency";
+
 
 	@Autowired
-	private FryeService fryeService;
+	private FryeService<List<Customer>> fryeService;
 
 	/**
 	 * 
@@ -80,35 +77,7 @@ public class CustomerService {
 		fryeService.putJason(PUT_CUSTOMER, customers);
 
 	}
-	/**
-	 * 
-	 * @param groups
-	 * @throws Exception
-	 */
-	public void uploadCurrency(List<Currency> currency) throws Exception {
-
-		fryeService.putJason(PUT_CURRENCY, currency);
-
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public List<Currency> getCurrencyFromSap() {
-		List<Currency> clist = new ArrayList<Currency>();
-		Currency c1 = new Currency();
-		c1.setCode("001");
-		c1.setName("dollar");
-		c1.setRate(32.80000);
-		
-		Currency c2 = new Currency();
-		c2.setCode("002");
-		c2.setName("cre");
-		c2.setRate(0.25123);
-		
-		clist.add(c1);
-		clist.add(c2);
-		return clist;
-	}
+	
+	
 
 }

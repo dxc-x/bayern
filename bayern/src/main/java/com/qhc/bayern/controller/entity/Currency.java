@@ -3,6 +3,8 @@
  */
 package com.qhc.bayern.controller.entity;
 
+import java.util.Date;
+
 /**
  * @author wang@dxc.com
  *
@@ -10,6 +12,8 @@ package com.qhc.bayern.controller.entity;
 public class Currency extends AbsConObject {
 	
 	private double rate;
+	
+	private Date effective;
 
 	public double getRate() {
 		return rate;
@@ -17,6 +21,14 @@ public class Currency extends AbsConObject {
 
 	public void setRate(double rate) {
 		this.rate = rate;
+	}
+
+	public Date getEffective() {
+		return effective;
+	}
+
+	public void setEffective(Date effective) {
+		this.effective = effective;
 	}
 	
 }

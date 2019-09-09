@@ -4,7 +4,7 @@
 package com.qhc.bayern.service;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.qhc.bayern.controller.entity.CharacteristicValue;
 import com.qhc.bayern.controller.entity.Clazz;
-import com.qhc.bayern.controller.entity.Customer;
 
 /**
  * @author wang@dxc.com
@@ -23,7 +22,7 @@ public class CharacteristicService {
 	private final static String PUT_CLASS = "class";
 	private final static String PUT_CHARACTERISTIC_VALUE= "characteristic";
 	@Autowired
-	private FryeService fryeService;
+	private FryeService<List<?>> fryeService;
 	
 	public List<Clazz> getClassesFromSap() {
 		List<Clazz> clist = new ArrayList<Clazz>();
