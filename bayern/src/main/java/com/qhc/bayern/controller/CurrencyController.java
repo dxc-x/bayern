@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Customer;
 import com.qhc.bayern.controller.entity.Incoterm;
+import com.qhc.bayern.controller.entity.Price;
 import com.qhc.bayern.service.CurrencyService;
 import com.qhc.bayern.service.CustomerService;
 
@@ -26,23 +27,33 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@Api(value = "Currency and incoterm data management in Bayern")
+@Api(value = "Currency,price and incoterm data management in Bayern")
 public class CurrencyController {
 	@Autowired
 	private CurrencyService currencyService;
 	
-	@ApiOperation(value = "retrieve customer data from SAP then save to DB")
+	@ApiOperation(value = "retrieve currency data from SAP then save to DB")
 	@GetMapping(value = "currency")
 	@ResponseStatus(HttpStatus.OK)
 	public void getCurrency() throws Exception {
 		List<Currency> temp = currencyService.getCurrencyFromSap(new Date());
 		currencyService.uploadCurrency(temp);
 	}
-	@ApiOperation(value = "retrieve customer data from SAP then save to DB")
-	@GetMapping(value = "currency")
+	@ApiOperation(value = "retrieve incoterm data from SAP then save to DB")
+	@GetMapping(value = "incoterm")
 	@ResponseStatus(HttpStatus.OK)
 	public void getIncoterm() throws Exception {
 		List<Incoterm> temp = currencyService.getIncotermFromSap();
 		currencyService.uploadIncoterm(temp);
+	}
+	@ApiOperation(value = "retrieve price data from SAP then save to DB")
+	@GetMapping(value = "price")
+	@ResponseStatus(HttpStatus.OK)
+	public void getPrices() throws Exception {
+		List<Price> temp = currencyService.getPriceFromSap(new Date());
+		while(!temp.isEmpty()) {
+			temp = currencyService.getPriceFromSap(new Date());
+		}
+		currencyService.uploadPrice(temp);
 	}
 }

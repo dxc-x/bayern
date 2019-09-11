@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Incoterm;
+import com.qhc.bayern.controller.entity.Price;
 
 /**
  * @author wang@dxc.com
@@ -22,6 +23,7 @@ public class CurrencyService {
 
 	private final static String PUT_CURRENCY = "currency";
 	private final static String PUT_INCOTERM = "incoterm";
+	private final static String PUT_PRICE = "price";
 
 	@Autowired
 	private FryeService<List<?>> fryeService;
@@ -84,5 +86,27 @@ public class CurrencyService {
 		ilist.add(i2);
 		
 		return ilist;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Price> getPriceFromSap(Date date) {
+		List<Price> ilist = new ArrayList<Price>();
+		Price i1 = new Price();
+			
+		ilist.add(i1);
+		
+		Price i2 = new Price();
+		
+		ilist.add(i2);	
+		return ilist;
+	}
+	
+	public void uploadPrice(List<Price> prices) throws Exception {
+
+		fryeService.putJason(PUT_PRICE, prices);
+
 	}
 }
