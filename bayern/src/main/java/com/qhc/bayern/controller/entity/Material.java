@@ -3,42 +3,83 @@
  */
 package com.qhc.bayern.controller.entity;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author wang@dxc.com
  *
  */
 public class Material {
-	public String code;
-	public String name;
-	public BigDecimal salePrice;
-	public BigDecimal cost;
+	private String code;
+	private String description;
+	private boolean isConfigurable;
+	private double mvPrice;
+	private double trPrice;
+	private double mkPrice;
+	private Date optTime;
+	private String type;
+	private String clazz;
+	private String unit;
 	public String getCode() {
 		return code;
 	}
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public BigDecimal getSalePrice() {
-		return salePrice;
+	public boolean isConfigurable() {
+		return isConfigurable;
 	}
-	public void setSalePrice(BigDecimal salePrice) {
-		this.salePrice = salePrice;
+	public void setConfigurable(boolean isConfigurable) {
+		this.isConfigurable = isConfigurable;
 	}
-	public BigDecimal getCost() {
-		return cost;
+	public double getMvPrice() {
+		return mvPrice;
 	}
-	public void setCost(BigDecimal cost) {
-		this.cost = cost;
+	public void setMvPrice(double mvPrice) {
+		this.mvPrice = mvPrice;
+	}
+	public double getTrPrice() {
+		return trPrice;
+	}
+	public void setTrPrice(double trPrice) {
+		this.trPrice = trPrice;
+	}
+	public double getMkPrice() {
+		return mkPrice;
+	}
+	public void setMkPrice(double mkPrice) {
+		this.mkPrice = mkPrice;
+	}
+	public Date getOptTime() {
+		return optTime;
+	}
+	public void setOptTime(Date optTime) {
+		this.optTime = optTime;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getClazz() {
+		return clazz;
+	}
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 	
-
 }

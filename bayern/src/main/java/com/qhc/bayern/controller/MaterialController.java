@@ -1,5 +1,6 @@
 package com.qhc.bayern.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qhc.bayern.controller.entity.Customer;
 import com.qhc.bayern.controller.entity.Material;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.service.MaterialService;
@@ -22,17 +24,18 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value = "Material data manager in Bayern")
-@RequestMapping("material")
 public class MaterialController {
 	
 	@Autowired
-	private MaterialService configService;
+	private MaterialService materialService;
 	
-	@ApiOperation(value="retrieve a new material by configable list from SAP")
-	@GetMapping(value = "/retrieve",produces = "application/json;charset=UTF-8")
+	@ApiOperation(value="retrieve newest material data from SAP and upload to DB")
+	@GetMapping(value = "material",produces = "application/json;charset=UTF-8")
 	@ResponseStatus(HttpStatus.OK)
-	public void getMaterial(@RequestBody List<String> config) throws Exception
+	public void getMaterials() throws Exception
 	{
-		
+		Date update = materialService.getLastUpdate();
+		List<Material> temp = materialService.getNewestMaterialsFromSap(update);
+		materialService.uploadMaterials(temp);
 	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.qhc.bayern.service.scheduler;
 
 import org.quartz.Job;
