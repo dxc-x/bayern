@@ -95,11 +95,15 @@ public class CurrencyService {
 	public List<Price> getPriceFromSap(Date date) {
 		List<Price> ilist = new ArrayList<Price>();
 		Price i1 = new Price();
-			
+		i1.setTypeCode("0001");
+		i1.setMaterialCode("00001");
+		i1.setPrice(18927.12);
 		ilist.add(i1);
 		
 		Price i2 = new Price();
-		
+		i2.setTypeCode("0001");
+		i2.setMaterialCode("00002");
+		i2.setPrice(18927.12);
 		ilist.add(i2);	
 		return ilist;
 	}
