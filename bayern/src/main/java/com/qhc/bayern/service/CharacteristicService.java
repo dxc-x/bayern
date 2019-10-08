@@ -19,8 +19,8 @@ import com.qhc.bayern.controller.entity.Clazz;
  */
 @Service
 public class CharacteristicService {
-	private final static String PUT_CLASS = "class";
-	private final static String PUT_CHARACTERISTIC_VALUE= "characteristic";
+	private final static String PUT_CLASS = "material/materialclass";
+	private final static String PUT_CHARACTERISTIC_VALUE= "material/characteristic";
 	@Autowired
 	private FryeService<List<?>> fryeService;
 	
