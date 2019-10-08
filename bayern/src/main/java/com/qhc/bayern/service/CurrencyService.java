@@ -22,8 +22,8 @@ import com.qhc.bayern.controller.entity.Price;
 public class CurrencyService {
 
 	private final static String PUT_CURRENCY = "currency";
-	private final static String PUT_INCOTERM = "incoterm";
-	private final static String PUT_PRICE = "price";
+	private final static String PUT_INCOTERM = "currency/incoterm";
+	private final static String PUT_PRICE = "currency/price";
 
 	@Autowired
 	private FryeService<List<?>> fryeService;
