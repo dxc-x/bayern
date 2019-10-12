@@ -13,7 +13,7 @@ public class Customer extends AbsConObject {
 	
 	private Date changedDate;
 	private String address;
-	private String groupCode;
+	//private String groupCode;
 	private String clazzCode;
 	private String levelCode;
 	private String affiliationCode;
@@ -31,12 +31,12 @@ public class Customer extends AbsConObject {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getGroupCode() {
-		return groupCode;
-	}
-	public void setGroupCode(String groupCode) {
-		this.groupCode = groupCode;
-	}
+//	public String getGroupCode() {
+//		return groupCode;
+//	}
+//	public void setGroupCode(String groupCode) {
+//		this.groupCode = groupCode;
+//	}
 	public String getClazzCode() {
 		return clazzCode;
 	}

@@ -46,7 +46,6 @@ public class CustomerService {
 		c1.setChangedDate(new Date(1008105271098L));
 		c1.setAddress("address");
 		c1.setClazzCode("01");
-		c1.setGroupCode("Z001");
 		c1.setLevelCode("0001");
 		c1.setAffiliationCode("0011");
 		c1.setAffiliationName("0011name");
@@ -57,7 +56,6 @@ public class CustomerService {
 		c2.setChangedDate(new Date(1008105271098L));
 		c2.setAddress("address");
 		c2.setClazzCode("01");
-		c2.setGroupCode("Z001");
 		c2.setLevelCode("0001");
 		c2.setAffiliationCode("0012");
 		c2.setAffiliationName("0012name");
