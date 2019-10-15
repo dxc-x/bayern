@@ -17,6 +17,7 @@ import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Incoterm;
 import com.qhc.bayern.controller.entity.Price;
 import com.qhc.bayern.util.HttpUtil;
+import com.qhc.bayern.util.StrToDouble;
 
 /**
  * @author wang@dxc.com
@@ -26,14 +27,20 @@ import com.qhc.bayern.util.HttpUtil;
 public class CurrencyService {
 
 	private final static String PUT_CURRENCY = "currency";
-	private final static String PUT_INCOTERM = "currency/incoterm";
+	private final static String PUT_INCOTERM = "currency/incoterms";
 	private final static String PUT_PRICE = "currency/price";
 	
 	@Value("${sap.currency.addr}")
-	String urlStr;
+	String currencyUrlStr;
 	
 	@Value("${sap.currency.param}")
-	String param;
+	String currencyParam;
+	
+	@Value("${sap.incoterm.addr}")
+	String incotermUrlStr;
+	
+	@Value("${sap.incoterm.param}")
+	String incotermParam;
 
 	@Autowired
 	private FryeService<List<?>> fryeService;
@@ -54,7 +61,7 @@ public class CurrencyService {
 	public List<Currency> getCurrencyFromSap(Date date) {
 		List<Currency> clist = new ArrayList<Currency>();
 		try {
-			String bb = HttpUtil.postbody(urlStr, param);
+			String bb = HttpUtil.postbody(currencyUrlStr, currencyParam);
 			JSONObject parseObject = JSONObject.parseObject(bb);
 			Object message = parseObject.get("message");
 			Object data = parseObject.get("data");
@@ -69,9 +76,9 @@ public class CurrencyService {
 				  }else {
 					  Currency currency = new Currency();
 					  currency.setCode(obj.getString("fcurr"));
-					  currency.setName(obj.getString("ktext_f"));
-					  
-					  currency.setRate(Double.valueOf(obj.getString("ukurs")));
+//					  currency.setName(obj.getString("ktext_f"));
+					  currency.setName("111");
+					  currency.setRate(StrToDouble.test(obj.getString("ukurs")));
 					  currency.setEffective(date);
 					  clist.add(currency);
 				  }
@@ -98,16 +105,27 @@ public class CurrencyService {
 	 */
 	public List<Incoterm> getIncotermFromSap() {
 		List<Incoterm> ilist = new ArrayList<Incoterm>();
-		Incoterm i1 = new Incoterm();
-		i1.setCode("CRZ");
-		i1.setName("asd");		
-		ilist.add(i1);
-		
-		Incoterm i2 = new Incoterm();
-		i2.setCode("REW");
-		i2.setName("name");
-		ilist.add(i2);
-		
+		try {
+			String bb = HttpUtil.postbody(incotermUrlStr, incotermParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object data = parseObject.get("data");
+			JSONArray parseArray = JSONArray.parseArray(data.toString());
+			for (int i = 0; i < parseArray.size();i++) { 
+				JSONObject obj = (JSONObject)parseArray.get(i); 
+				Incoterm incoterm = new Incoterm();
+				incoterm.setCode(obj.getString("inco1"));
+				incoterm.setName(obj.getString("bezei"));
+				incoterm.setSapSalesTypeCode("10");
+				ilist.add(incoterm);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		Incoterm i1 = new Incoterm();
+//		i1.setCode("CRZ");
+//		i1.setName("asd");		
+//		ilist.add(i1);
 		return ilist;
 	}
 	

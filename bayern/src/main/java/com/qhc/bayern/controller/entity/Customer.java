@@ -13,9 +13,9 @@ public class Customer extends AbsConObject {
 	
 	private Date changedDate;
 	private String address;
-	//private String groupCode;
+//	private String groupCode;
 	private String clazzCode;
-	private String levelCode;
+//	private String levelCode;
 	private String affiliationCode;
 	private String affiliationName;
 	
@@ -31,24 +31,15 @@ public class Customer extends AbsConObject {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-//	public String getGroupCode() {
-//		return groupCode;
-//	}
-//	public void setGroupCode(String groupCode) {
-//		this.groupCode = groupCode;
-//	}
+	
+
 	public String getClazzCode() {
 		return clazzCode;
 	}
 	public void setClazzCode(String clazzCode) {
 		this.clazzCode = clazzCode;
 	}
-	public String getLevelCode() {
-		return levelCode;
-	}
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
-	}
+
 	
 	public String getAffiliationCode() {
 		return affiliationCode;
