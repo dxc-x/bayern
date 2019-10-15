@@ -15,4 +15,10 @@ qhc:
         server: localhost
         port: 8801
         application: frye
+        
+sap:
+  currency:
+      addr: http://sape11.eu.carrier.utc.com:8003/sap/xi/zqhc_service?sap-client=900
+      param: "[{\"key\": \"METHOD\", \"value\":\"Z_QHC_SD_Q091_SD024\"},{\"key\":\"LANGU\",\"value\":\"1\"}]"
+      
    
