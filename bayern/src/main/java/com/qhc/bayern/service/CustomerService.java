@@ -92,7 +92,7 @@ public class CustomerService {
 	 */
 	public void uploadCustomers(List<Customer> customers) throws Exception {
 
-		fryeService.putJason(PUT_CUSTOMER, customers);
+		fryeService.postJason(PUT_CUSTOMER, customers);
 		
 	}
 	
