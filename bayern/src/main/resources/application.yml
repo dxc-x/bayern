@@ -18,7 +18,7 @@ qhc:
         
 sap:
   currency:
-      addr: http://sape11.eu.carrier.utc.com:8003/sap/xi/zqhc_service?sap-client=900&method=Z_QHC_SD_Q091_SD024
+      addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_SD_Q091_SD024
       param: "[{\"key\": \"KURST\", \"value\":\"M\"},{\"key\": \"LANGU\", \"value\":\"1\"}]"
   customer:
       addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_SD_Q091_SD018
