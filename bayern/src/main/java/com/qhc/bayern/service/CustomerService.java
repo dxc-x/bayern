@@ -57,14 +57,20 @@ public class CustomerService {
 			JSONArray parseArray = JSONArray.parseArray(data.toString());
 			for (int i = 0; i < parseArray.size();i++) {
 				 JSONObject obj = (JSONObject)parseArray.get(i); 
-				 Customer customer = new Customer();
-				 customer.setCode(obj.getString("kunnr"));
-				 customer.setName(obj.getString("name1"));
-				 customer.setAddress(obj.getString("street"));
-				 customer.setChangedDate(new Date());
-//				 customer.setClazzCode(obj.getString("kukla"));
-				 customer.setClazzCode("01");
-				 clist.add(customer);
+				 if(obj.getString("kukla")=="") {
+					 System.out.println("关键数据不能为空");
+					 continue;
+				 }else {
+					 Customer customer = new Customer();
+					 customer.setCode(obj.getString("kunnr"));
+					 customer.setName(obj.getString("name1"));
+					 customer.setAddress(obj.getString("street"));
+					 customer.setChangedDate(new Date());
+					 customer.setClazzCode(obj.getString("kukla"));
+					 customer.setAffiliationCode(obj.getString("brsch"));
+					 customer.setAffiliationName(obj.getString("brtxt"));
+					 clist.add(customer);
+				 }
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

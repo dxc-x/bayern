@@ -16,8 +16,8 @@ public class Customer extends AbsConObject {
 //	private String groupCode;
 	private String clazzCode;
 //	private String levelCode;
-	private String affiliationCode;
-	private String affiliationName;
+	private String affiliationCode;//Industry
+	private String affiliationName;//Industry name
 	
 	public Date getChangedDate() {
 		return changedDate;
