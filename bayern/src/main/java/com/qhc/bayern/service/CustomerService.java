@@ -56,8 +56,11 @@ public class CustomerService {
 			Object data = parseObject.get("data_cm");
 			JSONArray parseArray = JSONArray.parseArray(data.toString());
 			for (int i = 0; i < parseArray.size();i++) {
-				 JSONObject obj = (JSONObject)parseArray.get(i); 
-				 if(obj.getString("kukla")=="") {
+				 JSONObject obj = (JSONObject)parseArray.get(i);
+				 //如果sap_industry_code_code为空，赋默认值
+				 String industryCode = ("".equals(obj.getString("bran1")))?"no":obj.getString("bran1");
+				 
+				 if("".equals(obj.getString("kukla")) ) {
 					 System.out.println("关键数据不能为空");
 					 continue;
 				 }else {
@@ -69,6 +72,7 @@ public class CustomerService {
 					 customer.setClazzCode(obj.getString("kukla"));
 					 customer.setAffiliationCode(obj.getString("brsch"));
 					 customer.setAffiliationName(obj.getString("brtxt"));
+					 customer.setIndustryCodeCode(industryCode);
 					 clist.add(customer);
 				 }
 			}

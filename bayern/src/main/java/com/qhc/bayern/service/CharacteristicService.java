@@ -88,33 +88,28 @@ public class CharacteristicService {
 			Object data = parseObject.get("data");
 			JSONArray parseArray = JSONArray.parseArray(data.toString());
 			for (int i = 0; i < parseArray.size();i++) {
-				CharacteristicValue c1 = new CharacteristicValue();
-				c1.setCode("");
+				JSONObject obj = (JSONObject)parseArray.get(i);
 				
+				CharacteristicValue c1 = new CharacteristicValue();
+				
+				c1.setCode(obj.getString("atwrt"));
+				c1.setName(obj.getString("atwtb"));
+				c1.setCharacteristicCode(obj.getString("atnam"));
+				c1.setCharacteristicName(obj.getString("atbez"));
+				c1.setClazzCode(obj.getString("class")); 
+				clist.add(c1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		CharacteristicValue c1 = new CharacteristicValue();
-		c1.setCode("01");
-		c1.setName("value1");
-		c1.setCharacteristicCode("100002000030000400005000060000");
-		c1.setCharacteristicName("c1");
-		c1.setClazzCode("100000200000300000");
-		
-		CharacteristicValue c2 = new CharacteristicValue();
-		c2.setCode("02");
-		c2.setName("value2");
-		c2.setCharacteristicCode("100002000030000400005000060000");
-		c2.setCharacteristicName("c1");
-		c2.setName("c1");
-		c2.setClazzCode("100000200000300000");
-		
-		clist.add(c1);
-		clist.add(c2);
+//		
+//		CharacteristicValue c1 = new CharacteristicValue();
+//		c1.setCode("01");
+//		c1.setName("value1");
+//		c1.setCharacteristicCode("100002000030000400005000060000");
+//		c1.setCharacteristicName("c1");
+//		c1.setClazzCode("100000200000300000");
+//		clist.add(c1);
 		return clist;
 		
 	}

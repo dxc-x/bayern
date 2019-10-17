@@ -18,6 +18,7 @@ public class Customer extends AbsConObject {
 //	private String levelCode;
 	private String affiliationCode;//Industry
 	private String affiliationName;//Industry name
+	private String industryCodeCode;
 	
 	public Date getChangedDate() {
 		return changedDate;
@@ -32,7 +33,6 @@ public class Customer extends AbsConObject {
 		this.address = address;
 	}
 	
-
 	public String getClazzCode() {
 		return clazzCode;
 	}
@@ -52,6 +52,12 @@ public class Customer extends AbsConObject {
 	}
 	public void setAffiliationName(String affiliationName) {
 		this.affiliationName = affiliationName;
+	}
+	public String getIndustryCodeCode() {
+		return industryCodeCode;
+	}
+	public void setIndustryCodeCode(String industryCodeCode) {
+		this.industryCodeCode = industryCodeCode;
 	}
 	
 }
