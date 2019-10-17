@@ -26,5 +26,22 @@ sap:
   incoterm:
       addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_SD_Q091_SD034
       param: "[{\"key\": \"LANGU\", \"value\":\"1\"}]"
+  clazz:
+      addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_MDM_Q091_MDM016
+  characteristic:
+      addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_MDM_Q091_MDM017
+  sapOfficeGroup:
+      addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_SD_Q091_SD017
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
    

@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.qhc.bayern.controller.entity.Parameter;
 import com.qhc.bayern.controller.entity.SalesGroup;
+import com.qhc.bayern.util.HttpUtil;
 
 
 /**
@@ -19,6 +24,9 @@ public class LocationService {
 	
 	@Autowired
 	private FryeService<List<SalesGroup>> frye;
+	
+	@Value("${sap.sapOfficeGroup.addr}")
+	String sapOfficeGroupUrlStr;
 	
 	private final static String SALES_OFFICES = "location/salesOffice";
 
@@ -37,31 +45,39 @@ public class LocationService {
 	 */
 	public List<SalesGroup> getSalesgroupFromSAP() {
 		List<SalesGroup> rl = new ArrayList<SalesGroup>();
-		SalesGroup sg1 = new SalesGroup();
-		sg1.setCode("S01");
-		sg1.setName("青岛");
-		sg1.setOfficeCode("Z001");
-		sg1.setOfficeName("东区");
-		SalesGroup sg2 = new SalesGroup();
-		sg2.setCode("S02");
-		sg2.setName("济南");
-		sg2.setOfficeCode("Z001");
-		sg2.setOfficeName("东区");
-		SalesGroup sg3 = new SalesGroup();
-		sg3.setCode("S03");
-		sg3.setName("哈尔滨");
-		sg3.setOfficeCode("Z002");
-		sg3.setOfficeName("东北区");
-		SalesGroup sg4 = new SalesGroup();
-		sg4.setCode("S04");
-		sg4.setName("长春");
-		sg4.setOfficeCode("Z002");
-		sg4.setOfficeName("东北区");
-
-		rl.add(sg1);
-		rl.add(sg2);
-		rl.add(sg3);
-		rl.add(sg4);
+		try {
+			//接口请求参数
+			Parameter parameter2 = new Parameter();
+			parameter2.setKey("LANGU");
+			parameter2.setValue("1");
+			List<Parameter> parList = new ArrayList<Parameter>();
+			parList.add(parameter2);
+			String sapOfficeGroupParam = JSONObject.toJSONString(parList);
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(sapOfficeGroupUrlStr, sapOfficeGroupParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+//			Object officeData = parseObject.get("sales_office");
+			Object groupData = parseObject.get("sales_group");
+			JSONArray groupDataArray = JSONArray.parseArray(groupData.toString());
+			for (int i = 0; i < groupDataArray.size();i++) { 
+				JSONObject obj = (JSONObject)groupDataArray.get(i);
+				SalesGroup sg1 = new SalesGroup();
+				sg1.setCode(obj.getString("vkgrp"));
+				sg1.setName(obj.getString("vkgrptext"));
+				sg1.setOfficeCode(obj.getString("vkbur"));
+				sg1.setOfficeName(obj.getString("vkburtext"));
+				rl.add(sg1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		SalesGroup sg1 = new SalesGroup();
+//		sg1.setCode("S01");
+//		sg1.setName("青岛");
+//		sg1.setOfficeCode("Z001");
+//		sg1.setOfficeName("东区");
+//		rl.add(sg1);
 		return rl;
 	}
 
