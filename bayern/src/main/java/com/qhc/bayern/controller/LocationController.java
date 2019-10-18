@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qhc.bayern.controller.entity.PaymentPlan;
 import com.qhc.bayern.controller.entity.Province;
 import com.qhc.bayern.controller.entity.SalesGroup;
 import com.qhc.bayern.service.LocationService;
@@ -32,8 +33,6 @@ public class LocationController {
 	@Autowired
 	LocationService locationService;
 	
-	
-
 	@ApiOperation(value = "retrieve sales offices and sales group from SAP to DB")
 	@GetMapping(value = "offices")
 	@ResponseStatus(HttpStatus.OK)
@@ -41,5 +40,7 @@ public class LocationController {
 		List<SalesGroup> temp = locationService.getSalesgroupFromSAP();
 		locationService.save(temp);
 	}
+	
+	
 
 }
