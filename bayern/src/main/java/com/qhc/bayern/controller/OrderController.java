@@ -85,7 +85,7 @@ public class OrderController {
 		 
 		 return config.getFryeServer();
 	  }
-	  
+	  //同步SAP结算方式数据到销售工具
 	  @ApiOperation(value = "retrieve PaymentPlan from SAP to DB")
 	  @GetMapping(value = "paymentPlan")
 	  @ResponseStatus(HttpStatus.OK)

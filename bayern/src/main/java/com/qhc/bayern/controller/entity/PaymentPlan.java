@@ -6,7 +6,7 @@ public class PaymentPlan {
 	
 	private String name;
 	
-	private int paymentTerm;
+	private Boolean paymentTerm;
 
 	public String getCode() {
 		return code;
@@ -24,13 +24,13 @@ public class PaymentPlan {
 		this.name = name;
 	}
 
-	public int getPaymentTerm() {
+	public Boolean getPaymentTerm() {
 		return paymentTerm;
 	}
 
-	public void setPaymentTerm(int paymentTerm) {
+	public void setPaymentTerm(Boolean paymentTerm) {
 		this.paymentTerm = paymentTerm;
 	}
-	
 
+	
 }

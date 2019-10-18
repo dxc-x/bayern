@@ -38,7 +38,7 @@ public class OrderService {
 	@Value("${sap.paymentplan.addr}")
 	String paymentplanUrlStr;
 	
-	private final static String PAYMENT = "location/PaymentPlan";
+	private final static String PAYMENT = "order/paymentPlan";
 	
 	public void savePaymentPlan(List<PaymentPlan> PaymentPlan) throws Exception {
 		frye.putJason(PAYMENT, PaymentPlan);
@@ -67,7 +67,7 @@ public class OrderService {
 				PaymentPlan pm = new PaymentPlan();
 				pm.setCode(obj.getString("zterm"));
 				pm.setName(obj.getString("text1"));
-				pm.setPaymentTerm(1);
+				pm.setPaymentTerm(true);
 				lp.add(pm);
 			}
 			for (int i = 0; i < plDataArray.size();i++) { 
@@ -75,7 +75,7 @@ public class OrderService {
 				PaymentPlan pm = new PaymentPlan();
 				pm.setCode(obj.getString("tetbe"));
 				pm.setName(obj.getString("tebez"));
-				pm.setPaymentTerm(0);
+				pm.setPaymentTerm(false);
 				lp.add(pm);
 			}
 		} catch (Exception e) {
