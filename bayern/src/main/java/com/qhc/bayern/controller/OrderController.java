@@ -15,8 +15,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
+import com.qhc.bayern.controller.entity.PaymentPlan;
 import com.qhc.bayern.controller.entity.SapCreationOrder;
 import com.qhc.bayern.service.OrderService;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -38,6 +41,7 @@ import io.swagger.annotations.ApiOperation;
 public class OrderController {
 	
 	  private static Logger log = LoggerFactory.getLogger(OrderController.class);
+	  
 	  @Autowired
 	  ApplicationConfig config;
 	  
@@ -80,6 +84,14 @@ public class OrderController {
 	  {
 		 
 		 return config.getFryeServer();
+	  }
+	  
+	  @ApiOperation(value = "retrieve PaymentPlan from SAP to DB")
+	  @GetMapping(value = "paymentPlan")
+	  @ResponseStatus(HttpStatus.OK)
+	  public void getPaymentPlan() throws Exception {
+		  List<PaymentPlan> lp = orderService.getPaymentFromSAP();
+		  orderService.savePaymentPlan(lp);
 	  }
 	  
 	  /**
