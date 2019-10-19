@@ -6,11 +6,14 @@ package com.qhc.bayern.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.SapCreationOrder;
+import com.qhc.bayern.util.HttpUtil;
 
 import reactor.core.publisher.Mono;
 
@@ -21,6 +24,12 @@ import reactor.core.publisher.Mono;
 @Service
 public class OrderService {
 	private static Logger log = LoggerFactory.getLogger(OrderService.class);
+	
+	@Value("${sap.sapCreateOrder.addr}")
+	private String orderCreationUrl;
+	
+	@Value("${sap.sapChangeOrder.addr}")
+	private String orderChangeUrl;
 
 	public void updateStatus() {
 //		WebClient webClient = WebClient.create();
@@ -43,11 +52,11 @@ public class OrderService {
 		String res = null;
 	
 		//1.ͬ同步SAP开单 没有数据 先注释
-		//String sapStr = JSONObject.toJSONString(sapCreationOrder);
+		String sapStr = JSONObject.toJSONString(sapCreationOrder);
 		try {
 			//TODO:  SAP接口未提供 未做测试 
 			//没有数据先注释
-			//res = HttpUtil.postbody(orderCreationUrl, sapStr);
+			res = HttpUtil.postbody(orderCreationUrl, sapStr);
 			
 		} catch (Exception e) {
 			log.error("ͬ同步SAP异常==>",e);
@@ -56,8 +65,6 @@ public class OrderService {
 		
 		//2. 处理返回结果
 		log.info("SAP返回结果==>"+res);
-		
-//		return res;
 		
 		return "SUCCESS";
 		
