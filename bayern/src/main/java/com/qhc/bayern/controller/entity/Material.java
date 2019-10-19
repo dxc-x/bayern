@@ -10,75 +10,95 @@ import java.util.Date;
  *
  */
 public class Material {
-	private String code;
-	private String description;
-	private boolean isConfigurable;
-	private double mvPrice;
-	private double trPrice;
-	private double mkPrice;
-	private Date optTime;
-	private String type;
+	
+	private String code;   //matnr  物料编码
+	
+	private String description;  //maktx 物料描述
+	
+	private boolean isConfigurable;//kzkfg 是否可配置物料
+	
+	private boolean isPurchased;//物料属性
+	
+	private double standPrice;//verpr  标准价格
+	
+	private Date optTime;//laeda 
+	
+	private String measurementUnit;//meins  计量单位
+	
+	private String materialGroups;//matkl 物料分组
+	
 	private String clazz;
-	private String unit;
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public boolean isConfigurable() {
 		return isConfigurable;
 	}
+
 	public void setConfigurable(boolean isConfigurable) {
 		this.isConfigurable = isConfigurable;
 	}
-	public double getMvPrice() {
-		return mvPrice;
+
+	public boolean isPurchased() {
+		return isPurchased;
 	}
-	public void setMvPrice(double mvPrice) {
-		this.mvPrice = mvPrice;
+
+	public void setPurchased(boolean isPurchased) {
+		this.isPurchased = isPurchased;
 	}
-	public double getTrPrice() {
-		return trPrice;
+
+	public double getStandPrice() {
+		return standPrice;
 	}
-	public void setTrPrice(double trPrice) {
-		this.trPrice = trPrice;
+
+	public void setStandPrice(double standPrice) {
+		this.standPrice = standPrice;
 	}
-	public double getMkPrice() {
-		return mkPrice;
-	}
-	public void setMkPrice(double mkPrice) {
-		this.mkPrice = mkPrice;
-	}
+
 	public Date getOptTime() {
 		return optTime;
 	}
+
 	public void setOptTime(Date optTime) {
 		this.optTime = optTime;
 	}
-	public String getType() {
-		return type;
+
+	public String getMeasurementUnit() {
+		return measurementUnit;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public void setMeasurementUnit(String measurementUnit) {
+		this.measurementUnit = measurementUnit;
 	}
+
+	public String getMaterialGroups() {
+		return materialGroups;
+	}
+
+	public void setMaterialGroups(String materialGroups) {
+		this.materialGroups = materialGroups;
+	}
+
 	public String getClazz() {
 		return clazz;
 	}
+
 	public void setClazz(String clazz) {
 		this.clazz = clazz;
-	}
-	public String getUnit() {
-		return unit;
-	}
-	public void setUnit(String unit) {
-		this.unit = unit;
 	}
 	
 	

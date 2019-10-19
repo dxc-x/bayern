@@ -1,14 +1,21 @@
 package com.qhc.bayern.service;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Customer;
 import com.qhc.bayern.controller.entity.Material;
+import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.util.HttpUtil;
+import com.qhc.bayern.util.StrToDouble;
 
 
 @Service
@@ -17,39 +24,64 @@ public class MaterialService {
 	@Autowired
 	private FryeService<List<Material>> fryeService;
 	
+	@Value("${sap.material.addr}")
+	String materialUrlStr;
+	
 	private final static String LAST_UPDATED_DATE = "material/lastUpdateDate";
 	private final static String PUT_MATERIAL = "material";
 	
 	public Date getLastUpdate() {
-		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
+//		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
 		return new Date();
 	}
 	
 	public List<Material> getNewestMaterialsFromSap(Date date) {
 		List<Material> mlist = new ArrayList<Material>();
-		Material m1 = new Material();
-		m1.setCode("123");
-		m1.setClazz("001");
-		m1.setConfigurable(false);
-		m1.setDescription("12312312asdf");
-		m1.setMkPrice(123.12);
-		m1.setMvPrice(12.12);
-		m1.setTrPrice(321.12);
-		m1.setType("123");
-		m1.setUnit("BOM");
-		mlist.add(m1);
-		
-		Material m2 = new Material();
-		m2.setCode("124");
-		m2.setClazz("001");
-		m2.setConfigurable(false);
-		m2.setDescription("12312312asdf");
-		m2.setMkPrice(123.12);
-		m2.setMvPrice(12.12);
-		m2.setTrPrice(321.12);
-		m2.setType("123");
-		m2.setUnit("BOM");
-		mlist.add(m2);
+		try {
+			//接口请求参数
+			Parameter parameter1 = new Parameter();
+			parameter1.setKey("LAEDA");
+			parameter1.setValue("");
+			Parameter parameter2 = new Parameter();
+			parameter2.setKey("UZEIT");
+			parameter2.setValue("");
+			List<Parameter> parList = new ArrayList<Parameter>();
+			parList.add(parameter1);
+			parList.add(parameter2);
+			String paymentplanParam = JSONObject.toJSONString(parList);
+			//发送请求获取数据
+//			String bb = HttpUtil.postbody(materialUrlStr, paymentplanParam);
+//			JSONObject parseObject = JSONObject.parseObject(bb);
+//			Object message = parseObject.get("message");
+//			Object Data = parseObject.get("data");
+//			JSONArray DataArray = JSONArray.parseArray(Data.toString());
+//			for (int i = 0; i < DataArray.size();i++) { 
+//				JSONObject obj = (JSONObject)DataArray.get(i);
+				//
+//				Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
+				
+				Material material = new Material();
+				material.setCode("BG1HKG00000");
+				material.setDescription("AIW1820超越岛柜双层非冷货架(新加坡)");
+				material.setConfigurable(true);
+				material.setStandPrice(StrToDouble.test("0.00 "));
+				material.setMeasurementUnit("SZ");
+				material.setMaterialGroups("FA01");
+//				material.setCode(obj.getString("matnr"));
+//				material.setDescription(obj.getString("maktx"));
+//				material.setConfigurable(configurable);
+				material.setPurchased(true);
+//				material.setStandPrice(StrToDouble.test(obj.getString("verpr")));
+				//
+				material.setOptTime(new Date());
+//				material.setMeasurementUnit(obj.getString("meins"));
+//				material.setMaterialGroups(obj.getString("matkl"));
+				material.setClazz("A10");
+				mlist.add(material);
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mlist;
 	}
 	

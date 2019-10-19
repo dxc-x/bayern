@@ -69,19 +69,29 @@ public class OrderService {
 			JSONArray ptDataArray = JSONArray.parseArray(ptData.toString());
 			for (int i = 0; i < ptDataArray.size();i++) { 
 				JSONObject obj = (JSONObject)ptDataArray.get(i);
-				PaymentPlan pm = new PaymentPlan();
-				pm.setCode(obj.getString("zterm"));
-				pm.setName(obj.getString("text1"));
-				pm.setPaymentTerm(true);
-				lp.add(pm);
+				if("".equals(obj.getString("text1"))) {
+					System.out.println("name不能为空");
+					continue;
+				}else {
+					PaymentPlan pm = new PaymentPlan();
+					pm.setCode(obj.getString("zterm"));
+					pm.setName(obj.getString("text1"));
+					pm.setPaymentTerm(true);
+					lp.add(pm);
+				}
 			}
 			for (int i = 0; i < plDataArray.size();i++) { 
 				JSONObject obj = (JSONObject)plDataArray.get(i);
-				PaymentPlan pm = new PaymentPlan();
-				pm.setCode(obj.getString("tetbe"));
-				pm.setName(obj.getString("tebez"));
-				pm.setPaymentTerm(false);
-				lp.add(pm);
+				if("".equals(obj.getString("tebez"))) {
+					System.out.println("name不能为空");
+					continue;
+				}else {
+					PaymentPlan pm = new PaymentPlan();
+					pm.setCode(obj.getString("tetbe"));
+					pm.setName(obj.getString("tebez"));
+					pm.setPaymentTerm(false);
+					lp.add(pm);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
