@@ -88,13 +88,6 @@ public class OrderService {
 		}
 		return lp;
 	}
-	
-	
-	@Value("${sap.sapCreateOrder.addr}")
-	private String orderCreationUrl;
-	
-	@Value("${sap.sapChangeOrder.addr}")
-	private String orderChangeUrl;
 
 	public void updateStatus() {
 //		WebClient webClient = WebClient.create();
