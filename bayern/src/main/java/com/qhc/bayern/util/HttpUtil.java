@@ -67,7 +67,8 @@ public class HttpUtil {
     public static  String postbody(String tourl,String body)
             throws Exception {
         URL  url=null;
-        log.info("POST请求调用!" + tourl.toString() + body);
+        log.info("POST请求调用：" + tourl.toString());
+        log.info("POST请求数据：" + body);
 
         HttpURLConnection httpUrlConn = null;
         InputStream inputStream = null;
@@ -91,10 +92,18 @@ public class HttpUtil {
                 outputStream.close();
             }
 
-            inputStream = httpUrlConn.getInputStream();
-            String reqmsg = IOUtils.toString(inputStream, "UTF-8");
-            log.info("POST调用成功，返回：" + reqmsg);
-            return reqmsg;
+            Integer status = httpUrlConn.getResponseCode();
+            if (status == 200) {
+            	inputStream = httpUrlConn.getInputStream();
+                String reqmsg = IOUtils.toString(inputStream, "UTF-8");
+                log.info("POST调用成功，返回：" + reqmsg);
+                return reqmsg;
+            } else {
+            	inputStream = httpUrlConn.getErrorStream();
+                String reqmsg = IOUtils.toString(inputStream, "UTF-8");
+                log.info("POST调用失败，返回：" + reqmsg);
+            	throw new Exception(reqmsg);
+            }
         } catch (Exception e){
             e.printStackTrace();
             throw new Exception("error");
