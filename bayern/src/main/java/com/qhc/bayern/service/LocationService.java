@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.controller.entity.PaymentPlan;
 import com.qhc.bayern.controller.entity.SalesGroup;
 import com.qhc.bayern.util.HttpUtil;
 
@@ -23,7 +24,7 @@ import com.qhc.bayern.util.HttpUtil;
 public class LocationService {
 	
 	@Autowired
-	private FryeService<List<SalesGroup>> frye;
+	private FryeService<List<?>> frye;
 	
 	@Value("${sap.sapOfficeGroup.addr}")
 	String sapOfficeGroupUrlStr;
@@ -38,7 +39,7 @@ public class LocationService {
 		frye.putJason(SALES_OFFICES, groups);
 
 	}
-
+	
 	/**
 	 * 
 	 * @return sale office and sale group from sap
@@ -80,5 +81,7 @@ public class LocationService {
 //		rl.add(sg1);
 		return rl;
 	}
+	
+	
 
 }

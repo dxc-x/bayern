@@ -3,6 +3,9 @@
  */
 package com.qhc.bayern.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Order;
+import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.controller.entity.PaymentPlan;
 import com.qhc.bayern.controller.entity.SapCreationOrder;
 import com.qhc.bayern.util.HttpUtil;
 
@@ -24,6 +30,65 @@ import reactor.core.publisher.Mono;
 @Service
 public class OrderService {
 	private static Logger log = LoggerFactory.getLogger(OrderService.class);
+	
+	@Autowired
+	private FryeService<List<?>> frye;
+	
+	@Value("${sap.paymentplan.addr}")
+	String paymentplanUrlStr;
+
+	@Value("${sap.sapCreateOrder.addr}")
+	private String orderCreationUrl;
+	
+	@Value("${sap.sapChangeOrder.addr}")
+	private String orderChangeUrl;
+
+	private final static String PAYMENT = "order/paymentPlan";
+	
+	public void savePaymentPlan(List<PaymentPlan> PaymentPlan) throws Exception {
+		frye.putJason(PAYMENT, PaymentPlan);
+	}
+	
+	public List<PaymentPlan> getPaymentFromSAP(){
+		List<PaymentPlan> lp = new ArrayList<PaymentPlan>();
+		try {
+			//接口请求参数
+			Parameter parameter2 = new Parameter();
+			parameter2.setKey("LANGU");
+			parameter2.setValue("1");
+			List<Parameter> parList = new ArrayList<Parameter>();
+			parList.add(parameter2);
+			String paymentplanParam = JSONObject.toJSONString(parList);
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(paymentplanUrlStr, paymentplanParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object plData = parseObject.get("data_bl");
+			Object ptData = parseObject.get("data_pt");
+			JSONArray plDataArray = JSONArray.parseArray(plData.toString());
+			JSONArray ptDataArray = JSONArray.parseArray(ptData.toString());
+			for (int i = 0; i < ptDataArray.size();i++) { 
+				JSONObject obj = (JSONObject)ptDataArray.get(i);
+				PaymentPlan pm = new PaymentPlan();
+				pm.setCode(obj.getString("zterm"));
+				pm.setName(obj.getString("text1"));
+				pm.setPaymentTerm(true);
+				lp.add(pm);
+			}
+			for (int i = 0; i < plDataArray.size();i++) { 
+				JSONObject obj = (JSONObject)plDataArray.get(i);
+				PaymentPlan pm = new PaymentPlan();
+				pm.setCode(obj.getString("tetbe"));
+				pm.setName(obj.getString("tebez"));
+				pm.setPaymentTerm(false);
+				lp.add(pm);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lp;
+	}
+	
 	
 	@Value("${sap.sapCreateOrder.addr}")
 	private String orderCreationUrl;
