@@ -19,15 +19,15 @@ public class Material {
 	
 	private boolean isPurchased;//物料属性
 	
-	private double standPrice;//verpr  标准价格
+	private double standardPrice;//verpr  标准价格
 	
 	private Date optTime;//laeda 
 	
-	private String measurementUnit;//meins  计量单位
+	private String unitCode;//meins  计量单位
 	
-	private String materialGroups;//matkl 物料分组
+	private String groupCode;//matkl 物料分组
 	
-	private String clazz;
+	private String clazzCode;
 
 	public String getCode() {
 		return code;
@@ -61,12 +61,12 @@ public class Material {
 		this.isPurchased = isPurchased;
 	}
 
-	public double getStandPrice() {
-		return standPrice;
+	public double getStandardPrice() {
+		return standardPrice;
 	}
 
-	public void setStandPrice(double standPrice) {
-		this.standPrice = standPrice;
+	public void setStandardPrice(double standardPrice) {
+		this.standardPrice = standardPrice;
 	}
 
 	public Date getOptTime() {
@@ -77,29 +77,30 @@ public class Material {
 		this.optTime = optTime;
 	}
 
-	public String getMeasurementUnit() {
-		return measurementUnit;
+	public String getUnitCode() {
+		return unitCode;
 	}
 
-	public void setMeasurementUnit(String measurementUnit) {
-		this.measurementUnit = measurementUnit;
+	public void setUnitCode(String unitCode) {
+		this.unitCode = unitCode;
 	}
 
-	public String getMaterialGroups() {
-		return materialGroups;
+	public String getGroupCode() {
+		return groupCode;
 	}
 
-	public void setMaterialGroups(String materialGroups) {
-		this.materialGroups = materialGroups;
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
 	}
 
-	public String getClazz() {
-		return clazz;
+	public String getClazzCode() {
+		return clazzCode;
 	}
 
-	public void setClazz(String clazz) {
-		this.clazz = clazz;
+	public void setClazzCode(String clazzCode) {
+		this.clazzCode = clazzCode;
 	}
+
 	
 	
 }

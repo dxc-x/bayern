@@ -64,20 +64,21 @@ public class MaterialService {
 				material.setCode("BG1HKG00000");
 				material.setDescription("AIW1820超越岛柜双层非冷货架(新加坡)");
 				material.setConfigurable(true);
-				material.setStandPrice(StrToDouble.test("0.00 "));
-				material.setMeasurementUnit("SZ");
-				material.setMaterialGroups("FA01");
+				material.setStandardPrice(StrToDouble.test("0.00"));
+				material.setUnitCode("SZ");
+				material.setGroupCode("FA01");
 //				material.setCode(obj.getString("matnr"));
 //				material.setDescription(obj.getString("maktx"));
 //				material.setConfigurable(configurable);
 				material.setPurchased(true);
-//				material.setStandPrice(StrToDouble.test(obj.getString("verpr")));
+//				material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
 				//
 				
 //				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
-//				material.setMeasurementUnit(obj.getString("meins"));
-//				material.setMaterialGroups(obj.getString("matkl"));
-				material.setClazz("A10");
+//				material.setUnitCode(obj.getString("meins"));
+//				material.setGroupCode(obj.getString("matkl"));
+//				material.setClazzCode(obj.getString("class"));
+				material.setClazzCode("A10");
 				mlist.add(material);
 //			}
 		} catch (Exception e) {
