@@ -77,16 +77,16 @@ public class FryeService<T> {
 	/**
 	 * get last updated date by the business code defined in system
 	 */
-	public Date getLastUpdatedDate(String path) {
+	public String getLastUpdatedDate(String path) {
 		
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		
-		Mono<Date> response = webClient.get().uri(path)
+		Mono<String> response = webClient.get().uri(path)
 				.retrieve()
 				.onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new URLNotFoundException()))
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
-				.bodyToMono(Date.class);
+				.bodyToMono(String.class);
 		return response.block();
 	}
 

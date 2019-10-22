@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Customer;
 import com.qhc.bayern.controller.entity.Material;
 import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.util.DateUtil;
 import com.qhc.bayern.util.HttpUtil;
 import com.qhc.bayern.util.StrToDouble;
 
@@ -30,25 +31,24 @@ public class MaterialService {
 	private final static String LAST_UPDATED_DATE = "material/lastUpdateDate";
 	private final static String PUT_MATERIAL = "material";
 	
-	public Date getLastUpdate() {
-//		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
-		return new Date();
+	public String getLastUpdate() {
+		return fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
 	}
 	
-	public List<Material> getNewestMaterialsFromSap(Date date) {
+	public List<Material> getNewestMaterialsFromSap(String date) {
 		List<Material> mlist = new ArrayList<Material>();
 		try {
 			//接口请求参数
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("LAEDA");
-			parameter1.setValue("");
+			parameter1.setValue(date.substring(0,8));
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("UZEIT");
-			parameter2.setValue("");
+			parameter2.setValue(date.substring(8,14));
 			List<Parameter> parList = new ArrayList<Parameter>();
 			parList.add(parameter1);
 			parList.add(parameter2);
-			String paymentplanParam = JSONObject.toJSONString(parList);
+			String paymentplanParam = JSONObject.toJSONString(parList); 
 			//发送请求获取数据
 //			String bb = HttpUtil.postbody(materialUrlStr, paymentplanParam);
 //			JSONObject parseObject = JSONObject.parseObject(bb);
@@ -73,7 +73,8 @@ public class MaterialService {
 				material.setPurchased(true);
 //				material.setStandPrice(StrToDouble.test(obj.getString("verpr")));
 				//
-				material.setOptTime(new Date());
+				
+//				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
 //				material.setMeasurementUnit(obj.getString("meins"));
 //				material.setMaterialGroups(obj.getString("matkl"));
 				material.setClazz("A10");
