@@ -36,6 +36,12 @@ public class CurrencyService {
 	
 	@Value("${sap.incoterm.addr}")
 	String incotermUrlStr;
+	
+	@Value("${sap.price.addr}")
+	String priceUrlStr;
+	
+	@Value("${sap.priceA.addr}")
+	String priceAUrlStr;
 
 	@Autowired
 	private FryeService<List<?>> fryeService;
@@ -146,17 +152,36 @@ public class CurrencyService {
 	 */
 	public List<Price> getPriceFromSap(Date date) {
 		List<Price> ilist = new ArrayList<Price>();
-		Price i1 = new Price();
-		i1.setTypeCode("0001");
-		i1.setMaterialCode("00001");
-		i1.setPrice(18927.12);
-		ilist.add(i1);
-		
-		Price i2 = new Price();
-		i2.setTypeCode("0001");
-		i2.setMaterialCode("00002");
-		i2.setPrice(18927.12);
-		ilist.add(i2);	
+		try {
+			//接口请求参数
+			Parameter parameter1 = new Parameter();
+			parameter1.setKey("DATUM");
+			parameter1.setValue("20190405");
+			Parameter parameter2 = new Parameter();
+			parameter2.setKey("TCODE");
+			parameter2.setValue("ZSD_UPDPRICE");
+			List<Parameter> parList = new ArrayList<Parameter>();
+			parList.add(parameter1);
+			parList.add(parameter2);
+			String priceParam = JSONObject.toJSONString(parList);
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(priceUrlStr, priceParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object data = parseObject.get("data");
+			JSONArray parseArray = JSONArray.parseArray(data.toString());
+			for (int i = 0; i < parseArray.size();i++) { 
+				JSONObject obj = (JSONObject)parseArray.get(i); 
+				Price price = new Price();
+				price.setPrice(StrToDouble.test(obj.getString("kbetr")));
+				price.setTypeCode(obj.getString("kschl"));
+				price.setMaterialCode(obj.getString("matnr"));
+				price.setLastDate(obj.getString("erdat")+obj.getString("utime"));
+				ilist.add(price);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ilist;
 	}
 	

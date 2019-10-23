@@ -52,11 +52,5 @@ public class CurrencyController {
 	public void getPrices() throws Exception {
 		List<Price> temp = currencyService.getPriceFromSap(new Date());
 		currencyService.uploadPrice(temp);
-//		int loopf = 0;
-//		while(!temp.isEmpty()&&loopf<10) {
-//			loopf++;
-//			temp = currencyService.getPriceFromSap(new Date());
-//		}
-//		currencyService.uploadPrice(temp);
 	}
 }

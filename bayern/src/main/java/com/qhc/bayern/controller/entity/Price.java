@@ -11,6 +11,7 @@ public class Price {
 	private String typeCode;
 	private String materialCode;
 	private double price;
+	private String lastDate;
 	public String getTypeCode() {
 		return typeCode;
 	}
@@ -29,5 +30,12 @@ public class Price {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public String getLastDate() {
+		return lastDate;
+	}
+	public void setLastDate(String lastDate) {
+		this.lastDate = lastDate;
+	}
+	
 	
 }
