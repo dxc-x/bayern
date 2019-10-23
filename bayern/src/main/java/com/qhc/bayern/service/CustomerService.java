@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Customer;
+import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.util.DateUtil;
 import com.qhc.bayern.util.HttpUtil;
 
 /**
@@ -41,16 +43,22 @@ public class CustomerService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Date getLastUpdate() throws Exception {
-//		fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
-		return new Date();
-
+	public String getLastUpdate() throws Exception {
+		return fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
 	}
 
-	public List<Customer> getCustomersFromSap(Date lastUpdate) {
+	public List<Customer> getCustomersFromSap(String lastUpdate) {
 		List<Customer> clist = new ArrayList<Customer>();
 		try {
-			String bb = HttpUtil.postbody(urlStr, param);
+			//接口请求参数
+			Parameter parameter1 = new Parameter();
+			parameter1.setKey("DATUM");
+			parameter1.setValue(lastUpdate.substring(0, 8));
+			List<Parameter> parList = new ArrayList<Parameter>();
+			parList.add(parameter1);
+			String customerParam = JSONObject.toJSONString(parList);
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(urlStr, customerParam);
 			JSONObject parseObject = JSONObject.parseObject(bb);
 			Object message = parseObject.get("message");
 			Object data = parseObject.get("data_cm");
@@ -58,7 +66,7 @@ public class CustomerService {
 			for (int i = 0; i < parseArray.size();i++) {
 				 JSONObject obj = (JSONObject)parseArray.get(i);
 				 //如果sap_industry_code_code为空，赋默认值
-				 String industryCode = ("".equals(obj.getString("bran1")))?"no":obj.getString("bran1");
+				 String industryCode = ("".equals(obj.getString("bran1")))?"unknow":obj.getString("bran1");
 				 
 				 if("".equals(obj.getString("kukla")) ) {
 					 System.out.println("关键数据不能为空");

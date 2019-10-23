@@ -53,4 +53,12 @@ public class CurrencyController {
 		List<Price> temp = currencyService.getPriceFromSap(new Date());
 		currencyService.uploadPrice(temp);
 	}
+	
+	@ApiOperation(value = "retrieve priceA data from SAP then save to DB")
+	@GetMapping(value = "priceA")
+	@ResponseStatus(HttpStatus.OK)
+	public void getPricesA() throws Exception {
+		List<Price> temp = currencyService.getPriceAFromSap(new Date());
+		currencyService.uploadPriceA(temp);
+	}
 }

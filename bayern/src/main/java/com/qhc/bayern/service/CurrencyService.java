@@ -30,6 +30,7 @@ public class CurrencyService {
 	private final static String PUT_CURRENCY = "currency";
 	private final static String PUT_INCOTERM = "currency/incoterms";
 	private final static String PUT_PRICE = "currency/price";
+	private final static String PUT_PRICEA = "currency/priceA";
 	
 	@Value("${sap.currency.addr}")
 	String currencyUrlStr;
@@ -153,7 +154,7 @@ public class CurrencyService {
 	public List<Price> getPriceFromSap(Date date) {
 		List<Price> ilist = new ArrayList<Price>();
 		try {
-			//接口请求参数
+			//接口请求参数 不带年采价的接口Z_QHC_SD_Q091_SD028
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("DATUM");
 			parameter1.setValue("20190405");
@@ -174,9 +175,44 @@ public class CurrencyService {
 				JSONObject obj = (JSONObject)parseArray.get(i); 
 				Price price = new Price();
 				price.setPrice(StrToDouble.test(obj.getString("kbetr")));
-				price.setTypeCode(obj.getString("kschl"));
+				price.setType(obj.getString("kschl"));
 				price.setMaterialCode(obj.getString("matnr"));
 				price.setLastDate(obj.getString("erdat")+obj.getString("utime"));
+				//年采价以外的IndustryCode为空，所以设置默认值
+				price.setIndustryCode("unkn");
+				ilist.add(price);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ilist;
+	}
+	
+	public List<Price> getPriceAFromSap(Date date) {
+		List<Price> ilist = new ArrayList<Price>();
+		try {
+			//带年采价的接口 Z_QHC_SD_Q091_SD028A
+			Parameter parameter3 = new Parameter();
+			parameter3.setKey("DATUM");
+			parameter3.setValue("20191015");
+			
+			List<Parameter> parListA = new ArrayList<Parameter>();
+			parListA.add(parameter3);
+			String priceParamA = JSONObject.toJSONString(parListA);
+			//发送请求获取数据
+			String priceA = HttpUtil.postbody(priceAUrlStr, priceParamA);
+			JSONObject parseObjectA = JSONObject.parseObject(priceA);
+
+			Object priceAdata = parseObjectA.get("data");
+			JSONArray parseArrayA = JSONArray.parseArray(priceAdata.toString());
+			for (int i = 0; i < parseArrayA.size();i++) { 
+				JSONObject objA = (JSONObject)parseArrayA.get(i); 
+				Price price = new Price();
+				price.setPrice(StrToDouble.test(objA.getString("kbetr")));
+				price.setType(objA.getString("brsch"));
+				price.setMaterialCode(objA.getString("matnr"));
+				price.setLastDate(objA.getString("erdat")+objA.getString("utime"));
+				price.setIndustryCode(objA.getString("kschl"));
 				ilist.add(price);
 			}
 		} catch (Exception e) {
@@ -186,8 +222,10 @@ public class CurrencyService {
 	}
 	
 	public void uploadPrice(List<Price> prices) throws Exception {
-
 		fryeService.putJason(PUT_PRICE, prices);
-
+	}
+	
+	public void uploadPriceA(List<Price> prices) throws Exception {
+		fryeService.putJason(PUT_PRICEA, prices);
 	}
 }

@@ -8,16 +8,12 @@ package com.qhc.bayern.controller.entity;
  *
  */
 public class Price {
-	private String typeCode;
-	private String materialCode;
 	private double price;
+	private String type;
+	private String materialCode;
+	private String industryCode;
 	private String lastDate;
-	public String getTypeCode() {
-		return typeCode;
-	}
-	public void setTypeCode(String typeCode) {
-		this.typeCode = typeCode;
-	}
+	
 	public String getMaterialCode() {
 		return materialCode;
 	}
@@ -35,6 +31,18 @@ public class Price {
 	}
 	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getIndustryCode() {
+		return industryCode;
+	}
+	public void setIndustryCode(String industryCode) {
+		this.industryCode = industryCode;
 	}
 	
 	

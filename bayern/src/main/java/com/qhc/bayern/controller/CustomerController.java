@@ -36,7 +36,7 @@ public class CustomerController {
 	@GetMapping(value = "customer")
 	@ResponseStatus(HttpStatus.OK)
 	public void getCustomers() throws Exception {
-		Date update = customerService.getLastUpdate();
+		String update = customerService.getLastUpdate();
 		List<Customer> temp = customerService.getCustomersFromSap(update);
 		customerService.uploadCustomers(temp);
 	}
