@@ -50,7 +50,8 @@ public class CurrencyController {
 	@GetMapping(value = "price")
 	@ResponseStatus(HttpStatus.OK)
 	public void getPrices() throws Exception {
-		List<Price> temp = currencyService.getPriceFromSap(new Date());
+		String update = currencyService.getLastUpdate();
+		List<Price> temp = currencyService.getPriceFromSap(update);
 		currencyService.uploadPrice(temp);
 	}
 	
@@ -58,7 +59,8 @@ public class CurrencyController {
 	@GetMapping(value = "priceA")
 	@ResponseStatus(HttpStatus.OK)
 	public void getPricesA() throws Exception {
-		List<Price> temp = currencyService.getPriceAFromSap(new Date());
+		String update = currencyService.getLastUpdate();
+		List<Price> temp = currencyService.getPriceAFromSap(update);
 		currencyService.uploadPriceA(temp);
 	}
 }

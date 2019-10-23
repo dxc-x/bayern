@@ -17,6 +17,7 @@ import com.qhc.bayern.controller.entity.Currency;
 import com.qhc.bayern.controller.entity.Incoterm;
 import com.qhc.bayern.controller.entity.Parameter;
 import com.qhc.bayern.controller.entity.Price;
+import com.qhc.bayern.util.DateUtil;
 import com.qhc.bayern.util.HttpUtil;
 import com.qhc.bayern.util.StrToDouble;
 
@@ -31,6 +32,9 @@ public class CurrencyService {
 	private final static String PUT_INCOTERM = "currency/incoterms";
 	private final static String PUT_PRICE = "currency/price";
 	private final static String PUT_PRICEA = "currency/priceA";
+	
+	private final static String LAST_UPDATED_DATE = "currency/lastUpdateDate";
+	private final static String PRICEA_LAST_UPDATED_DATE = "currency/priceALastUpdateDate";
 	
 	@Value("${sap.currency.addr}")
 	String currencyUrlStr;
@@ -151,13 +155,14 @@ public class CurrencyService {
 	 * 
 	 * @return
 	 */
-	public List<Price> getPriceFromSap(Date date) {
+	public List<Price> getPriceFromSap(String date) {
 		List<Price> ilist = new ArrayList<Price>();
 		try {
 			//接口请求参数 不带年采价的接口Z_QHC_SD_Q091_SD028
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("DATUM");
 			parameter1.setValue("20190405");
+//			parameter1.setValue(DateUtil.convert2String(new Date(), "yyyyMMdd"));
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("TCODE");
 			parameter2.setValue("ZSD_UPDPRICE");
@@ -188,7 +193,7 @@ public class CurrencyService {
 		return ilist;
 	}
 	
-	public List<Price> getPriceAFromSap(Date date) {
+	public List<Price> getPriceAFromSap(String date) {
 		List<Price> ilist = new ArrayList<Price>();
 		try {
 			//带年采价的接口 Z_QHC_SD_Q091_SD028A
@@ -227,5 +232,12 @@ public class CurrencyService {
 	
 	public void uploadPriceA(List<Price> prices) throws Exception {
 		fryeService.putJason(PUT_PRICEA, prices);
+	}
+	
+	public String getLastUpdate() {
+		return fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
+	}
+	public String getALastUpdate() {
+		return fryeService.getLastUpdatedDate(PRICEA_LAST_UPDATED_DATE);
 	}
 }
