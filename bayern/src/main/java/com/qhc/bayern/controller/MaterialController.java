@@ -1,7 +1,9 @@
 package com.qhc.bayern.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -38,5 +40,17 @@ public class MaterialController {
 //		List<Material> temp = materialService.getNewestMaterialsFromSap();
 		materialService.saveNewestMaterialsFromSap();
 //		materialService.uploadMaterials(temp);
+	}
+	
+	@ApiOperation(value="retrieve newest bomExplosion data from SAP and upload to DB")
+	@GetMapping(value = "bomExplosion",produces = "application/json;charset=UTF-8")
+	@ResponseStatus(HttpStatus.OK)
+	public void getBomExplosion() throws Exception
+	{
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("bom_code", "BG1FMM00000");
+		map.put("D105", "1");
+		map.put("D108", "2");
+		Map<String, List> bomMap = materialService.getBomExplosion(map);
 	}
 }

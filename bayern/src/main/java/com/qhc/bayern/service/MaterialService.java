@@ -121,7 +121,7 @@ public class MaterialService {
 	
 	
 	//BOM
-	public Map<String, List> bomExplosion(Map<String, String> mapParam) {
+	public Map<String, List> getBomExplosion(Map<String, String> mapParam) {
 		Map<String, List> map = new HashMap<String, List>();
 		
 		try {
@@ -145,7 +145,7 @@ public class MaterialService {
 			String bomParam = JSONObject.toJSONString(bomHeadParam);
 				
 			//发送请求获取数据
-			String bb = HttpUtil.postbody(bomExplosionUrlStr, "{\"matnr\":\"BG1FMM00000\",\"werks\":\"0841\",\"stlan\":\"1\",\"charac\":[{\"atnam\":\"D105\",\"atwrt\":\"1\"},{\"atnam\":\"D108\",\"atwrt\":\"2\"}]}");
+			String bb = HttpUtil.postbody(bomExplosionUrlStr, bomParam);
 			JSONObject parseObject = JSONObject.parseObject(bb);
 			Object message = parseObject.get("message");
 			Object data = parseObject.get("data");
@@ -185,7 +185,6 @@ public class MaterialService {
 				bomList2.add(bom);
 			}
 			//
-			
 			map.put(BOM_CONFIGURATION_CONFIGURATED, bomList1);
 			map.put(BOM_CONFIGURATION_DEFAULT, bomList2);
 			
