@@ -123,7 +123,6 @@ public class OrderService {
 		String sapStr = JSONObject.toJSONString(sapCreationOrder);
 		log.info("Order Creation Data: {}", sapStr);
 		try {
-			//TODO:  SAP接口未提供 未做测试 
 			//没有数据先注释
 			res = HttpUtil.postbody(orderCreationUrl, sapStr);
 			
