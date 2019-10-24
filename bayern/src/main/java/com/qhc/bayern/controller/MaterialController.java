@@ -35,7 +35,8 @@ public class MaterialController {
 	public void getMaterials() throws Exception
 	{
 //		String update = materialService.getLastUpdate();
-		List<Material> temp = materialService.getNewestMaterialsFromSap();
-		materialService.uploadMaterials(temp);
+//		List<Material> temp = materialService.getNewestMaterialsFromSap();
+		materialService.saveNewestMaterialsFromSap();
+//		materialService.uploadMaterials(temp);
 	}
 }

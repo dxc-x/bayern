@@ -40,14 +40,13 @@ public class MaterialService {
 		try {
 			String dateParameter = this.getLastUpdate();
 			
-			
 			//接口请求参数
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("LAEDA");
-			parameter1.setValue("");
+			parameter1.setValue(dateParameter.substring(0,8));
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("UZEIT");
-			parameter2.setValue("");
+			parameter2.setValue(dateParameter.substring(8,14));
 			List<Parameter> parList = new ArrayList<Parameter>();
 			parList.add(parameter1);
 			parList.add(parameter2);
@@ -87,8 +86,18 @@ public class MaterialService {
 		}
 		return mlist;
 	}
-	
-	
+
+	public void saveNewestMaterialsFromSap() {
+		for (int i = 0; i < 100; i++) {
+			List<Material> matList = this.getNewestMaterialsFromSap();
+			if(matList.size() > 0) {
+				this.uploadMaterials(matList);
+			}else {
+				System.out.println("物料数据抽取完毕");
+				break;
+			}
+		}
+	}
 	
 	public void uploadMaterials(List<Material> materials) {
 		fryeService.putJason(PUT_MATERIAL, materials);
