@@ -3,7 +3,9 @@ package com.qhc.bayern.service;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qhc.bayern.controller.entity.Bom;
+import com.qhc.bayern.controller.entity.BomBodyParam;
+import com.qhc.bayern.controller.entity.BomHeadParam;
 import com.qhc.bayern.controller.entity.Customer;
 import com.qhc.bayern.controller.entity.Material;
 import com.qhc.bayern.controller.entity.Parameter;
@@ -28,8 +33,19 @@ public class MaterialService {
 	@Value("${sap.material.addr}")
 	String materialUrlStr;
 	
+	@Value("${sap.bomExplosion.addr}")
+	String bomExplosionUrlStr;
+	
 	private final static String LAST_UPDATED_DATE = "material/lastUpdateDate";
 	private final static String PUT_MATERIAL = "material";
+	
+	//
+	public final static String BOM_CONFIGURATION_DEFAULT = "default";
+	public final static String BOM_CONFIGURATION_CONFIGURATED = "configurated";
+	public final static String MATERIAL_BOM_CODE ="bom_code";
+	public final static String WERKS ="0841";
+	public final static String STLAN ="1";
+	
 	
 	public String getLastUpdate() {
 		return fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
@@ -101,6 +117,82 @@ public class MaterialService {
 	
 	public void uploadMaterials(List<Material> materials) {
 		fryeService.putJason(PUT_MATERIAL, materials);
+	}
+	
+	
+	//BOM
+	public Map<String, List> bomExplosion(Map<String, String> mapParam) {
+		Map<String, List> map = new HashMap<String, List>();
+		
+		try {
+			List<Bom> bomList1 = new ArrayList<Bom>();
+			//
+			BomHeadParam bomHeadParam = new BomHeadParam();
+			bomHeadParam.setMatnr(mapParam.get(MATERIAL_BOM_CODE));
+			bomHeadParam.setWerks(WERKS);
+			bomHeadParam.setStlan(STLAN);
+			//去掉map中的物料号，只留特征，循环插入list
+			mapParam.remove(MATERIAL_BOM_CODE);
+			List list = new ArrayList<>();
+			for (Map.Entry<String, String> entity : mapParam.entrySet()) {
+				BomBodyParam atnam = new BomBodyParam();
+				atnam.setAtnam(entity.getKey());
+				atnam.setAtwrt(entity.getValue());
+				list.add(atnam);
+			}
+			bomHeadParam.setCharac(list);
+			//BOM接口的请求参数
+			String bomParam = JSONObject.toJSONString(bomHeadParam);
+				
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(bomExplosionUrlStr, "{\"matnr\":\"BG1FMM00000\",\"werks\":\"0841\",\"stlan\":\"1\",\"charac\":[{\"atnam\":\"D105\",\"atwrt\":\"1\"},{\"atnam\":\"D108\",\"atwrt\":\"2\"}]}");
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object data = parseObject.get("data");
+			Object data_def = parseObject.get("data_def");
+			JSONArray dataArray = JSONArray.parseArray(data.toString());
+			for (int i = 0; i < dataArray.size();i++) { 
+				JSONObject obj = (JSONObject)dataArray.get(i);
+				//
+				Boolean configurable = (!"".equals(obj.getString("kzkfg")))?true:false;
+				Boolean marked = (!"".equals(obj.getString("mark")))?true:false;
+				//
+				Bom bom = new Bom();
+				bom.setCode(obj.getString("matnr_stpo"));
+				bom.setParent(obj.getString("matnr"));
+				bom.setConfigurable(configurable);
+				bom.setPrice(StrToDouble.test(obj.getString("stprs")));
+				bom.setQuantity(StrToDouble.test(obj.getString("menge")));
+				bom.setMarked(marked);
+				bomList1.add(bom);
+			}
+			
+			List<Bom> bomList2 = new ArrayList<Bom>();
+			JSONArray dataDefArray = JSONArray.parseArray(data_def.toString());
+			for (int i = 0; i < dataDefArray.size();i++) { 
+				JSONObject obj = (JSONObject)dataDefArray.get(i);
+				//
+				Boolean configurable = (!"".equals(obj.getString("kzkfg")))?true:false;
+				Boolean marked = (!"".equals(obj.getString("mark")))?true:false;
+				//
+				Bom bom = new Bom();
+				bom.setCode(obj.getString("matnr_stpo"));
+				bom.setParent(obj.getString("matnr"));
+				bom.setConfigurable(configurable);
+				bom.setPrice(StrToDouble.test(obj.getString("stprs")));
+				bom.setQuantity(StrToDouble.test(obj.getString("menge")));
+				bom.setMarked(marked);
+				bomList2.add(bom);
+			}
+			//
+			
+			map.put(BOM_CONFIGURATION_CONFIGURATED, bomList1);
+			map.put(BOM_CONFIGURATION_DEFAULT, bomList2);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 
 }
