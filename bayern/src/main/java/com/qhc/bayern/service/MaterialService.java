@@ -35,57 +35,60 @@ public class MaterialService {
 		return fryeService.getLastUpdatedDate(LAST_UPDATED_DATE);
 	}
 	
-	public List<Material> getNewestMaterialsFromSap(String date) {
+	public List<Material> getNewestMaterialsFromSap() {
 		List<Material> mlist = new ArrayList<Material>();
 		try {
+			String dateParameter = this.getLastUpdate();
+			
+			
 			//接口请求参数
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("LAEDA");
-			parameter1.setValue(date.substring(0,8));
+			parameter1.setValue("");
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("UZEIT");
-			parameter2.setValue(date.substring(8,14));
+			parameter2.setValue("");
 			List<Parameter> parList = new ArrayList<Parameter>();
 			parList.add(parameter1);
 			parList.add(parameter2);
 			String paymentplanParam = JSONObject.toJSONString(parList); 
 			//发送请求获取数据
-//			String bb = HttpUtil.postbody(materialUrlStr, paymentplanParam);
-//			JSONObject parseObject = JSONObject.parseObject(bb);
-//			Object message = parseObject.get("message");
-//			Object Data = parseObject.get("data");
-//			JSONArray DataArray = JSONArray.parseArray(Data.toString());
-//			for (int i = 0; i < DataArray.size();i++) { 
-//				JSONObject obj = (JSONObject)DataArray.get(i);
+			String bb = HttpUtil.postbody(materialUrlStr, paymentplanParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object Data = parseObject.get("data");
+			JSONArray DataArray = JSONArray.parseArray(Data.toString());
+			for (int i = 0; i < DataArray.size();i++) { 
+				JSONObject obj = (JSONObject)DataArray.get(i);
 				//
-//				Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
+				Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
+				Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
 				
 				Material material = new Material();
-				material.setCode("BG1HKG00000");
-				material.setDescription("AIW1820超越岛柜双层非冷货架(新加坡)");
-				material.setConfigurable(true);
-				material.setStandardPrice(StrToDouble.test("0.00"));
 				material.setUnitCode("SZ");
 				material.setGroupCode("FA01");
-//				material.setCode(obj.getString("matnr"));
-//				material.setDescription(obj.getString("maktx"));
-//				material.setConfigurable(configurable);
-				material.setPurchased(true);
-//				material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
-				//
+				material.setClazzCode("unconfigurable");
 				
-//				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
+				material.setCode(obj.getString("matnr"));
+				material.setDescription(obj.getString("maktx"));
+				material.setConfigurable(configurable);
+				material.setPurchased(purchased);
+				material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
+				//
+				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
 //				material.setUnitCode(obj.getString("meins"));
 //				material.setGroupCode(obj.getString("matkl"));
 //				material.setClazzCode(obj.getString("class"));
-				material.setClazzCode("A10");
+				material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
 				mlist.add(material);
-//			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mlist;
 	}
+	
+	
 	
 	public void uploadMaterials(List<Material> materials) {
 		fryeService.putJason(PUT_MATERIAL, materials);

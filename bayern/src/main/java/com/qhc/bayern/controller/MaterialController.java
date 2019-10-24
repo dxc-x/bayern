@@ -34,8 +34,8 @@ public class MaterialController {
 	@ResponseStatus(HttpStatus.OK)
 	public void getMaterials() throws Exception
 	{
-		String update = materialService.getLastUpdate();
-		List<Material> temp = materialService.getNewestMaterialsFromSap(update);
+//		String update = materialService.getLastUpdate();
+		List<Material> temp = materialService.getNewestMaterialsFromSap();
 		materialService.uploadMaterials(temp);
 	}
 }

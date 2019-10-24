@@ -17,17 +17,19 @@ public class Material {
 	
 	private boolean isConfigurable;//kzkfg 是否可配置物料
 	
-	private boolean isPurchased;//物料属性
+	private boolean isPurchased;//  beskz 物料属性
 	
 	private double standardPrice;//verpr  标准价格
 	
-	private Date optTime;//laeda 
+	private Date optTime;//laeda  laetm 日期和时间
+	
+	private double materialSize;//volum 体积
 	
 	private String unitCode;//meins  计量单位
 	
 	private String groupCode;//matkl 物料分组
 	
-	private String clazzCode;
+	private String clazzCode;//class
 
 	public String getCode() {
 		return code;
@@ -99,6 +101,14 @@ public class Material {
 
 	public void setClazzCode(String clazzCode) {
 		this.clazzCode = clazzCode;
+	}
+
+	public double getMaterialSize() {
+		return materialSize;
+	}
+
+	public void setMaterialSize(double materialSize) {
+		this.materialSize = materialSize;
 	}
 
 	
