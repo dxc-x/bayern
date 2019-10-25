@@ -30,9 +30,11 @@ public class SapOrderItem {
 	private String vbbpz117;
 	// Color option/颜色可选项 -- Selling tool 颜色可选项信息
 	private String vbbpz120;
-	// Customer special request/客户物料说明 -- Selling tool 备注
+	// Survey info. Note/调研表备注 -- Selling tool 备注
 	private String vbbp0007;
-	
+	// Color Note/颜色备注
+	private String vbbpz118;
+
 	public Integer getPosnr() {
 		return posnr;
 	}
@@ -122,5 +124,11 @@ public class SapOrderItem {
 	}
 	public void setVbbp0007(String vbbp0007) {
 		this.vbbp0007 = vbbp0007;
+	}
+	public String getVbbpz118() {
+		return vbbpz118;
+	}
+	public void setVbbpz118(String vbbpz118) {
+		this.vbbpz118 = vbbpz118;
 	}
 }
