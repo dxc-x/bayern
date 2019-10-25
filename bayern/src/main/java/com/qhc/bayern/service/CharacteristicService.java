@@ -101,7 +101,6 @@ public class CharacteristicService {
 				JSONObject obj = (JSONObject)parseArray.get(i);
 				
 				CharacteristicValue c1 = new CharacteristicValue();
-				
 				c1.setCode(obj.getString("atwrt"));
 				c1.setName(obj.getString("atwtb"));
 				c1.setCharacteristicCode(obj.getString("atnam"));
