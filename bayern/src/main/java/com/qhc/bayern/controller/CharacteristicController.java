@@ -47,7 +47,7 @@ public class CharacteristicController {
 		charaService.uploadCharacteristicValue(values);
 	}
 	
-	@ApiOperation(value = "retrieve class data from SAP then save to DB")
+	@ApiOperation(value = "retrieve DefaultCharacteristic data from SAP then save to DB")
 	@GetMapping(value = "defaultCharacteristic")
 	@ResponseStatus(HttpStatus.OK)
 	public void getDefaultCharacteristic() throws Exception {
