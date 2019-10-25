@@ -4,7 +4,7 @@
 package com.qhc.bayern.service;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.CharacteristicValue;
 import com.qhc.bayern.controller.entity.Clazz;
+import com.qhc.bayern.controller.entity.DefaultBodyParam;
+import com.qhc.bayern.controller.entity.DefaultCharacteristics;
+import com.qhc.bayern.controller.entity.DefaultHeadParam;
 import com.qhc.bayern.controller.entity.Parameter;
+import com.qhc.bayern.util.DateUtil;
 import com.qhc.bayern.util.HttpUtil;
 
 /**
@@ -26,12 +30,18 @@ import com.qhc.bayern.util.HttpUtil;
 public class CharacteristicService {
 	private final static String PUT_CLASS = "material/materialclass";
 	private final static String PUT_CHARACTERISTIC_VALUE= "material/characteristic";
+	//
+	public final static String sign ="I";
+	public final static String option ="EQ";
 	
 	@Value("${sap.clazz.addr}")
 	String clazzUrlStr;
 	
 	@Value("${sap.characteristic.addr}")
 	String characteristicUrlStr;
+	
+	@Value("${sap.defaultCharacteristics.addr}")
+	String defaultUrlStr;
 	
 	@Autowired
 	private FryeService<List<?>> fryeService;
@@ -102,21 +112,52 @@ public class CharacteristicService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		
-//		CharacteristicValue c1 = new CharacteristicValue();
-//		c1.setCode("01");
-//		c1.setName("value1");
-//		c1.setCharacteristicCode("100002000030000400005000060000");
-//		c1.setCharacteristicName("c1");
-//		c1.setClazzCode("100000200000300000");
-//		clist.add(c1);
 		return clist;
-		
 	}
 	public void uploadCharacteristicValue(List<CharacteristicValue> chavalue) throws Exception {
 
 		fryeService.putJason(PUT_CHARACTERISTIC_VALUE, chavalue);
 
+	}
+	
+	//默认特征
+	public List<DefaultCharacteristics> getConfigurationProfile(String materCode) {
+		List<DefaultCharacteristics> list = new ArrayList<DefaultCharacteristics>();
+		try {
+			//请求参数
+			DefaultBodyParam bodyParam = new DefaultBodyParam();
+			bodyParam.setSign(sign);
+			bodyParam.setOption(option);
+			bodyParam.setLow(materCode);
+			List paramlist = new ArrayList<>();
+			paramlist.add(bodyParam);
+			DefaultHeadParam headParam = new DefaultHeadParam();
+			headParam.setAedat("");
+//			headParam.setAedat(DateUtil.convert2String(new Date(), "yyyyMMdd"));
+			headParam.setItMatnr(paramlist);
+			String defaultParam = JSONObject.toJSONString(headParam);
+			//发送请求获取数据
+			String bb = HttpUtil.postbody(defaultUrlStr, defaultParam);
+			JSONObject parseObject = JSONObject.parseObject(bb);
+			Object message = parseObject.get("message");
+			Object data = parseObject.get("data");
+			JSONArray dataArray = JSONArray.parseArray(data.toString());
+			for (int i = 0; i < dataArray.size();i++) { 
+				JSONObject obj = (JSONObject)dataArray.get(i);
+				
+				DefaultCharacteristics dc = new DefaultCharacteristics();
+				dc.setMaterialCode(obj.getString("matnr"));
+				dc.setClassCode(obj.getString("class"));
+				dc.setCharacteristic(obj.getString("atnam"));
+				dc.setCharacterDescription(obj.getString("atbez"));
+				dc.setCharacterValue(obj.getString("atwrt"));
+				dc.setCharacterValueDes(obj.getString("atwtb"));
+				list.add(dc);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }

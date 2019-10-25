@@ -126,7 +126,7 @@ public class MaterialService {
 		
 		try {
 			List<Bom> bomList1 = new ArrayList<Bom>();
-			//
+			//请求参数
 			BomHeadParam bomHeadParam = new BomHeadParam();
 			bomHeadParam.setMatnr(mapParam.get(MATERIAL_BOM_CODE));
 			bomHeadParam.setWerks(WERKS);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qhc.bayern.controller.entity.CharacteristicValue;
 import com.qhc.bayern.controller.entity.Clazz;
 import com.qhc.bayern.controller.entity.Currency;
+import com.qhc.bayern.controller.entity.DefaultCharacteristics;
 import com.qhc.bayern.service.CharacteristicService;
 import com.qhc.bayern.service.CustomerService;
 
@@ -44,5 +45,14 @@ public class CharacteristicController {
 	public void getCharacteristic() throws Exception {
 		List<CharacteristicValue>  values = charaService.getClassesAndCharacteristicValueFromSap();
 		charaService.uploadCharacteristicValue(values);
+	}
+	
+	@ApiOperation(value = "retrieve class data from SAP then save to DB")
+	@GetMapping(value = "defaultCharacteristic")
+	@ResponseStatus(HttpStatus.OK)
+	public void getDefaultCharacteristic() throws Exception {
+		String materCode = "BG1QUA00000";
+		List<DefaultCharacteristics> defaultList = charaService.getConfigurationProfile(materCode);
+		
 	}
 }

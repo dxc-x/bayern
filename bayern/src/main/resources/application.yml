@@ -42,7 +42,8 @@ sap:
       addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_SD_Q091_SD028A  
   bomExplosion:
       addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=Z_QHC_MDM_Q090_MDM015 
-       
+  defaultCharacteristics:
+      addr: http://sapt11.eu.carrier.utc.com:8002/sap/xi/zqhc_service?sap-client=220&method=ZQHC_MDM_Q037_FM004  
        
       
   sapCreateOrder:
