@@ -53,7 +53,8 @@ public class CustomerService {
 			//接口请求参数
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("DATUM");
-			parameter1.setValue(lastUpdate.substring(0, 8));
+//			parameter1.setValue(lastUpdate.substring(0, 8));
+			parameter1.setValue("20190404");
 			List<Parameter> parList = new ArrayList<Parameter>();
 			parList.add(parameter1);
 			String customerParam = JSONObject.toJSONString(parList);

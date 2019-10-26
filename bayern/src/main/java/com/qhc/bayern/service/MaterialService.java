@@ -104,7 +104,7 @@ public class MaterialService {
 	}
 
 	public void saveNewestMaterialsFromSap() {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			List<Material> matList = this.getNewestMaterialsFromSap();
 			if(matList.size() > 0) {
 				this.uploadMaterials(matList);
