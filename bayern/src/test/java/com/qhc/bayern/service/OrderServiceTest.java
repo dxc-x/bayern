@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.qhc.bayern.controller.entity.SapCreationOrder;
-import com.qhc.bayern.controller.entity.SapOrderCharacteristics;
-import com.qhc.bayern.controller.entity.SapOrderHeader;
-import com.qhc.bayern.controller.entity.SapOrderItem;
-import com.qhc.bayern.controller.entity.SapOrderPlan;
-import com.qhc.bayern.controller.entity.SapOrderPrice;
+import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
+import com.qhc.bayern.controller.entity.sap.SapOrderCharacteristics;
+import com.qhc.bayern.controller.entity.sap.SapOrderHeader;
+import com.qhc.bayern.controller.entity.sap.SapOrderItem;
+import com.qhc.bayern.controller.entity.sap.SapOrderPlan;
+import com.qhc.bayern.controller.entity.sap.SapOrderPrice;
 
 @SpringBootTest
 class OrderServiceTest {

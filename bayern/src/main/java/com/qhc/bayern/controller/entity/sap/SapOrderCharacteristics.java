@@ -1,4 +1,4 @@
-package com.qhc.bayern.controller.entity;
+package com.qhc.bayern.controller.entity.sap;
 
 public class SapOrderCharacteristics {
 	// Item/行项目编号	VBAP-POSNR -- Selling tool 行号

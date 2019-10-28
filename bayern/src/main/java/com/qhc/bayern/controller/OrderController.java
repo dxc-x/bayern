@@ -16,7 +16,7 @@ import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.PaymentPlan;
-import com.qhc.bayern.controller.entity.SapCreationOrder;
+import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
 import com.qhc.bayern.service.OrderService;
 
 import java.util.List;

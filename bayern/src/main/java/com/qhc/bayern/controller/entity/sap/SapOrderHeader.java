@@ -1,4 +1,4 @@
-package com.qhc.bayern.controller.entity;
+package com.qhc.bayern.controller.entity.sap;
 
 public class SapOrderHeader {
 	// Sales order type/订单类型 -- Selling tool 需求类型

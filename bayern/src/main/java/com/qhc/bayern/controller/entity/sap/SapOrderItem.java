@@ -1,4 +1,4 @@
-package com.qhc.bayern.controller.entity;
+package com.qhc.bayern.controller.entity.sap;
 
 public class SapOrderItem {
 	// Ship-to PO item/送达方-采购订单编号项目 -- Selling tool 行号

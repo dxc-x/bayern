@@ -1,4 +1,4 @@
-package com.qhc.bayern.controller.entity;
+package com.qhc.bayern.controller.entity.sap;
 
 import java.util.List;
 
