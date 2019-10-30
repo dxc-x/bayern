@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +21,8 @@ import com.qhc.bayern.controller.entity.sap.SapOrderPrice;
 
 @SpringBootTest
 class OrderServiceTest {
+	Logger logger = LoggerFactory.getLogger("com.qhc.bayern.sap");
+	
 	@Autowired
 	OrderService orderService;
 
@@ -31,9 +35,11 @@ class OrderServiceTest {
 	void testOrderCreationForSAP() {
 		SapCreationOrder sapCreationOrder = getSapCreationOrder();
 		
+		logger.info("Start test sap order creation.");
+		
 		String result = orderService.orderCreationForSAP(sapCreationOrder);
 		
-		System.out.println("Result: %s" + result);
+		logger.info("Result: {}" + result);
 	}
 	
 	SapCreationOrder getSapCreationOrder() {

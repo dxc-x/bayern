@@ -15,6 +15,11 @@ qhc:
         server: localhost
         port: 8801
         application: frye
+
+# logging config
+logging:
+    config: classpath:logback-spring.xml
+    path: ./logs
         
 sap:
   currency:
