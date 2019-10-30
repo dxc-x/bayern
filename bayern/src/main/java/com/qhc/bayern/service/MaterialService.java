@@ -78,11 +78,13 @@ public class MaterialService {
 				//
 				Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
 				Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
+				String clazzCode = ("".equals(obj.getString("class")))?"unconfigurable":obj.getString("class");
+				String groupCode = ("01".equals(obj.getString("matkl")))?"FA01":obj.getString("matkl");
 				
 				Material material = new Material();
 				material.setUnitCode("SZ");
 				material.setGroupCode("FA01");
-				material.setClazzCode("unconfigurable");
+//				material.setClazzCode("unconfigurable");
 				
 				material.setCode(obj.getString("matnr"));
 				material.setDescription(obj.getString("maktx"));
@@ -92,8 +94,8 @@ public class MaterialService {
 				//
 				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
 //				material.setUnitCode(obj.getString("meins"));
-//				material.setGroupCode(obj.getString("matkl"));
-//				material.setClazzCode(obj.getString("class"));
+//				material.setGroupCode(groupCode);
+				material.setClazzCode(clazzCode);
 				material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
 				mlist.add(material);
 			}

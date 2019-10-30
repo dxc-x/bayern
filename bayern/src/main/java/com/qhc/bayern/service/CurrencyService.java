@@ -161,11 +161,11 @@ public class CurrencyService {
 			//接口请求参数 不带年采价的接口Z_QHC_SD_Q091_SD028
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("DATUM");
-			parameter1.setValue("20190405");
+			parameter1.setValue("20191031");
 //			parameter1.setValue(DateUtil.convert2String(new Date(), "yyyyMMdd"));
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("TCODE");
-			parameter2.setValue("ZSD_UPDPRICE");
+			parameter2.setValue("VK11");
 			List<Parameter> parList = new ArrayList<Parameter>();
 			parList.add(parameter1);
 			parList.add(parameter2);
@@ -199,7 +199,7 @@ public class CurrencyService {
 			//带年采价的接口 Z_QHC_SD_Q091_SD028A
 			Parameter parameter3 = new Parameter();
 			parameter3.setKey("DATUM");
-			parameter3.setValue("20191015");
+			parameter3.setValue("20190101");//20190101
 			
 			List<Parameter> parListA = new ArrayList<Parameter>();
 			parListA.add(parameter3);
