@@ -104,7 +104,7 @@ public class MaterialService {
 		}
 		return mlist;
 	}
-
+	//循环调用物料接口，同步物料数据
 	public void saveNewestMaterialsFromSap() {
 		for (int i = 0; i < 1000; i++) {
 			List<Material> matList = this.getNewestMaterialsFromSap();

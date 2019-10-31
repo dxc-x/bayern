@@ -162,7 +162,7 @@ public class CurrencyService {
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("DATUM");
 			parameter1.setValue("20191031");
-//			parameter1.setValue(DateUtil.convert2String(new Date(), "yyyyMMdd"));
+//			parameter1.setValue(date.substring(0, 8));
 			Parameter parameter2 = new Parameter();
 			parameter2.setKey("TCODE");
 			parameter2.setValue("VK11");
@@ -200,7 +200,7 @@ public class CurrencyService {
 			Parameter parameter3 = new Parameter();
 			parameter3.setKey("DATUM");
 			parameter3.setValue("20190101");//20190101
-			
+//			parameter3.setValue(date.substring(0, 8));
 			List<Parameter> parListA = new ArrayList<Parameter>();
 			parListA.add(parameter3);
 			String priceParamA = JSONObject.toJSONString(parListA);

@@ -30,6 +30,7 @@ import com.qhc.bayern.util.HttpUtil;
 public class CharacteristicService {
 	private final static String PUT_CLASS = "material/materialclass";
 	private final static String PUT_CHARACTERISTIC_VALUE= "material/characteristic";
+	private final static String PUT_CHARACTERISTIC_DEFAULT= "material/default";
 	//
 	public final static String sign ="I";
 	public final static String option ="EQ";
@@ -113,21 +114,20 @@ public class CharacteristicService {
 		}
 		return clist;
 	}
+	
 	public void uploadCharacteristicValue(List<CharacteristicValue> chavalue) throws Exception {
-
 		fryeService.putJason(PUT_CHARACTERISTIC_VALUE, chavalue);
-
 	}
 	
 	//默认特征
-	public List<DefaultCharacteristics> getConfigurationProfile(String materCode) {
+	public List<DefaultCharacteristics> getConfigurationProfile() {
 		List<DefaultCharacteristics> list = new ArrayList<DefaultCharacteristics>();
 		try {
 			//请求参数
 			DefaultBodyParam bodyParam = new DefaultBodyParam();
 			bodyParam.setSign(sign);
 			bodyParam.setOption(option);
-			bodyParam.setLow(materCode);
+//			bodyParam.setLow(materCode);
 			List paramlist = new ArrayList<>();
 			paramlist.add(bodyParam);
 			DefaultHeadParam headParam = new DefaultHeadParam();
@@ -157,6 +157,10 @@ public class CharacteristicService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public void uploadCharacteristicDefault(List<DefaultCharacteristics> defaultChavalue) throws Exception {
+		fryeService.putJason(PUT_CHARACTERISTIC_VALUE, defaultChavalue);
 	}
 	
 }

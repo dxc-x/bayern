@@ -51,11 +51,11 @@ public class CharacteristicController {
 	@ApiOperation(value = "retrieve DefaultCharacteristic data from SAP then save to DB")
 	@GetMapping(value = "defaultCharacteristic/{materCode}")
 	@ResponseStatus(HttpStatus.OK)
-	public List<DefaultCharacteristics> getDefaultCharacteristic(
+	public void getDefaultCharacteristic(
 			@PathVariable String materCode
 			) throws Exception {
 //		String materCode = "BG1QUA00000";
-		List<DefaultCharacteristics> defaultList = charaService.getConfigurationProfile(materCode);
-		return defaultList;
+		List<DefaultCharacteristics> defaultList = charaService.getConfigurationProfile();
+		
 	}
 }
