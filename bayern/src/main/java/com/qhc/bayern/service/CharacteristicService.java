@@ -32,8 +32,6 @@ public class CharacteristicService {
 	private final static String PUT_CHARACTERISTIC_VALUE= "material/characteristic";
 	private final static String PUT_CHARACTERISTIC_DEFAULT= "material/default";
 	//
-	public final static String sign ="I";
-	public final static String option ="EQ";
 	
 	@Value("${sap.clazz.addr}")
 	String clazzUrlStr;
@@ -125,14 +123,13 @@ public class CharacteristicService {
 		try {
 			//请求参数
 			DefaultBodyParam bodyParam = new DefaultBodyParam();
-			bodyParam.setSign(sign);
-			bodyParam.setOption(option);
-//			bodyParam.setLow(materCode);
+			bodyParam.setSign("");
+			bodyParam.setOption("");
+			bodyParam.setLow("");
 			List paramlist = new ArrayList<>();
 			paramlist.add(bodyParam);
 			DefaultHeadParam headParam = new DefaultHeadParam();
 			headParam.setAedat("");
-//			headParam.setAedat(DateUtil.convert2String(new Date(), "yyyyMMdd"));
 			headParam.setItMatnr(paramlist);
 			String defaultParam = JSONObject.toJSONString(headParam);
 			//发送请求获取数据
@@ -160,7 +157,7 @@ public class CharacteristicService {
 	}
 	
 	public void uploadCharacteristicDefault(List<DefaultCharacteristics> defaultChavalue) throws Exception {
-		fryeService.putJason(PUT_CHARACTERISTIC_VALUE, defaultChavalue);
+		fryeService.putJason(PUT_CHARACTERISTIC_DEFAULT, defaultChavalue);
 	}
 	
 }
