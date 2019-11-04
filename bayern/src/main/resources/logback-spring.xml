@@ -24,7 +24,7 @@
         </layout>
     </appender>
 
-    <logger name="com.qhc.bayern.sap" level="debug"/>
+    <logger name="com.qhc.bayern" level="debug"/>
     <root level="INFO">
         <appender-ref ref="ROLLING_SAP"/>
     </root>
