@@ -1,7 +1,7 @@
 server: 
     servlet:
         context-path : /bayern 
-    port: 8804 
+    port: 8880 
 spring:
     devtools:
         restart:
@@ -13,7 +13,7 @@ qhc:
     frye: 
         protocal: http
         server: localhost
-        port: 8801
+        port: 8880
         application: frye
 
 # logging config
