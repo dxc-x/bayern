@@ -54,6 +54,7 @@ public class MaterialService {
 	public List<Material> getNewestMaterialsFromSap() {
 		List<Material> mlist = new ArrayList<Material>();
 		try {
+			String pingGuLei="1000,3101,3102,3104,3105,3109,3212,3233,3235,3237,9101,9102,9103";
 			String dateParameter = this.getLastUpdate();
 			
 			//接口请求参数
@@ -75,29 +76,34 @@ public class MaterialService {
 			JSONArray DataArray = JSONArray.parseArray(Data.toString());
 			for (int i = 0; i < DataArray.size();i++) { 
 				JSONObject obj = (JSONObject)DataArray.get(i);
-				//
-				Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
-				Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
-				String clazzCode = ("".equals(obj.getString("class")))?"unconfigurable":obj.getString("class");
-				String groupCode = ("".equals(obj.getString("bklas")))?"1000":obj.getString("bklas");
+				if("".equals(obj.getString("meins"))) {
+					System.out.println(obj.getString("matnr")+":计量单位不能为空");
+				}else if(pingGuLei.indexOf(obj.getString("bklas")) == -1) {
+					System.out.println(obj.getString("matnr")+":评估类不正确");
+				}else {
+					//
+					Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
+					Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
+					String clazzCode = ("".equals(obj.getString("class")))?"unconfigurable":obj.getString("class");
+					String groupCode = ("".equals(obj.getString("bklas")))?"1000":obj.getString("bklas");
+					
+					Material material = new Material();
+//					material.setUnitCode("SZ");
+					
+					material.setCode(obj.getString("matnr"));
+					material.setDescription(obj.getString("maktx"));
+					material.setConfigurable(configurable);
+					material.setPurchased(purchased);
+					material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
+					//
+					material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
+					material.setUnitCode(obj.getString("meins"));
+					material.setGroupCode(groupCode);
+					material.setClazzCode(clazzCode);
+					material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
+					mlist.add(material);
+				}
 				
-				Material material = new Material();
-				material.setUnitCode("SZ");
-//				material.setGroupCode("FA01");
-//				material.setClazzCode("unconfigurable");
-				
-				material.setCode(obj.getString("matnr"));
-				material.setDescription(obj.getString("maktx"));
-				material.setConfigurable(configurable);
-				material.setPurchased(purchased);
-				material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
-				//
-				material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
-//				material.setUnitCode(obj.getString("meins"));
-				material.setGroupCode(groupCode);
-				material.setClazzCode(clazzCode);
-				material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
-				mlist.add(material);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
