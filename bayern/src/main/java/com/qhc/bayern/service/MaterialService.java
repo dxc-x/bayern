@@ -79,13 +79,30 @@ public class MaterialService {
 				if("".equals(obj.getString("meins"))) {
 					System.out.println(obj.getString("matnr")+":计量单位不能为空");
 				}else if(pingGuLei.indexOf(obj.getString("bklas")) == -1) {
+					Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
+					Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
+					String clazzCode = ("".equals(obj.getString("class")))?"unconfigurable":obj.getString("class");
+					
+					Material material = new Material();
+					material.setCode(obj.getString("matnr"));
+					material.setDescription(obj.getString("maktx"));
+					material.setConfigurable(configurable);
+					material.setPurchased(purchased);
+					material.setStandardPrice(StrToDouble.test(obj.getString("verpr")));
+					//
+					material.setOptTime(DateUtil.convert2Date(obj.getString("laeda")+obj.getString("laetm"), "yyyyMMddHHmmss"));
+					material.setUnitCode(obj.getString("meins"));
+					material.setGroupCode("9999");
+					material.setClazzCode(clazzCode);
+					material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
+					mlist.add(material);
 					System.out.println(obj.getString("matnr")+":评估类不正确");
 				}else {
 					//
 					Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
 					Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
 					String clazzCode = ("".equals(obj.getString("class")))?"unconfigurable":obj.getString("class");
-					String groupCode = ("".equals(obj.getString("bklas")))?"1000":obj.getString("bklas");
+					String groupCode = ("".equals(obj.getString("bklas")))?"9999":obj.getString("bklas");
 					
 					Material material = new Material();
 //					material.setUnitCode("SZ");

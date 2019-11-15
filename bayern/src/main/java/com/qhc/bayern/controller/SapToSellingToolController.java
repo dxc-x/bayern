@@ -50,6 +50,18 @@ public class SapToSellingToolController {
 	@Autowired
 	private OrderService orderService;
 	
+/*	1.currency
+	2.incoterm
+	3.class
+	4.customer
+	5.offices
+	6.paymentPlan
+	7.CharacteristicValue
+	8.materials
+	9.price
+	10.priceA
+	11.defaultCharacteristic */
+	
 	@ApiOperation(value = "同步sap数据进入销售工具")
 	@GetMapping(value = "SapToSellingTool")
 	@ResponseStatus(HttpStatus.OK)
