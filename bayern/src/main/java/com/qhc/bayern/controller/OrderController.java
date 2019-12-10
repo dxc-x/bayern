@@ -5,9 +5,11 @@ package com.qhc.bayern.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,7 @@ import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
 import com.qhc.bayern.service.OrderService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -117,6 +120,27 @@ public class OrderController {
 		  	return sapRes;
 		  
 	  }
+	    
+	    /**
+	     * 订单BPM回调接口
+     * <li>sequenceNumber</li>
+     * <li>status</li>
+     * <li>bodyDiscount</li>
+     * <li>unitDiscount</li>
+	     * 
+	     * @return
+	     */
+		@ApiOperation(value="查询订单类型", notes="查询订单类型")
+		@PutMapping(value = "callback")
+		@ResponseBody
+		public boolean bpmCallback(@RequestBody Map data) {
+			String status = String.valueOf(data.get("status"));
+			String sequenceNumber = String.valueOf(data.get("sequenceNumber"));
+			Double bodyDiscount = Double.valueOf(String.valueOf(data.get("bodyDiscount")));
+			Double unitDiscount = Double.valueOf(String.valueOf(data.get("unitDiscount")));
+			
+	    	return true;
+	    }
 	  
 	  
 }
