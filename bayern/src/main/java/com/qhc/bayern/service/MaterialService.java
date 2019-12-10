@@ -57,7 +57,7 @@ public class MaterialService {
 			String pingGuLei="1000,3101,3102,3104,3105,3109,3212,3233,3235,3237,9101,9102,9103";
 			String dateParameter = this.getLastUpdate();
 			
-			//接口请求参数
+			//æŽ¥å�£è¯·æ±‚å�‚æ•°
 			Parameter parameter1 = new Parameter();
 			parameter1.setKey("LAEDA");
 			parameter1.setValue(dateParameter.substring(0,8));
@@ -68,7 +68,7 @@ public class MaterialService {
 			parList.add(parameter1);
 			parList.add(parameter2);
 			String paymentplanParam = JSONObject.toJSONString(parList); 
-			//发送请求获取数据
+			//å�‘é€�è¯·æ±‚èŽ·å�–æ•°æ�®
 			String bb = HttpUtil.postbody(materialUrlStr, paymentplanParam);
 			JSONObject parseObject = JSONObject.parseObject(bb);
 			Object message = parseObject.get("message");
@@ -77,7 +77,7 @@ public class MaterialService {
 			for (int i = 0; i < DataArray.size();i++) { 
 				JSONObject obj = (JSONObject)DataArray.get(i);
 				if("".equals(obj.getString("meins"))) {
-					System.out.println(obj.getString("matnr")+":计量单位不能为空");
+					System.out.println(obj.getString("matnr")+":è®¡é‡�å�•ä½�ä¸�èƒ½ä¸ºç©º");
 				}else if(pingGuLei.indexOf(obj.getString("bklas")) == -1) {
 					Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
 					Boolean purchased = ("E".equals(obj.getString("beskz")))?true:false;
@@ -96,7 +96,7 @@ public class MaterialService {
 					material.setClazzCode(clazzCode);
 					material.setMaterialSize(StrToDouble.test(obj.getString("volum")));
 					mlist.add(material);
-					System.out.println(obj.getString("matnr")+":评估类不正确");
+					System.out.println(obj.getString("matnr")+":è¯„ä¼°ç±»ä¸�æ­£ç¡®");
 				}else {
 					//
 					Boolean configurable = ("X".equals(obj.getString("kzkfg")))?true:false;
@@ -127,14 +127,14 @@ public class MaterialService {
 		}
 		return mlist;
 	}
-	//循环调用物料接口，同步物料数据
+	//å¾ªçŽ¯è°ƒç”¨ç‰©æ–™æŽ¥å�£ï¼Œå�Œæ­¥ç‰©æ–™æ•°æ�®
 	public void saveNewestMaterialsFromSap() {
 		for (int i = 0; i < 1000; i++) {
 			List<Material> matList = this.getNewestMaterialsFromSap();
 			if(matList.size() > 0) {
 				this.uploadMaterials(matList);
 			}else {
-				System.out.println("物料数据抽取完毕");
+				System.out.println("ç‰©æ–™æ•°æ�®æŠ½å�–å®Œæ¯•");
 				break;
 			}
 		}
@@ -146,17 +146,17 @@ public class MaterialService {
 	
 	
 	//BOM
-	public Map<String, List> getBomExplosion(Map<String, String> mapParam) {
-		Map<String, List> map = new HashMap<String, List>();
+	public Map<String, List<Bom>> getBomExplosion(Map<String, String> mapParam) {
+		Map<String, List<Bom>> map = new HashMap<String, List<Bom>>();
 		
 		try {
 			List<Bom> bomList1 = new ArrayList<Bom>();
-			//请求参数
+			//è¯·æ±‚å�‚æ•°
 			BomHeadParam bomHeadParam = new BomHeadParam();
 			bomHeadParam.setMatnr(mapParam.get(MATERIAL_BOM_CODE));
 			bomHeadParam.setWerks(WERKS);
 			bomHeadParam.setStlan(STLAN);
-			//去掉map中的物料号，只留特征，循环插入list
+			//åŽ»æŽ‰mapä¸­çš„ç‰©æ–™å�·ï¼Œå�ªç•™ç‰¹å¾�ï¼Œå¾ªçŽ¯æ�’å…¥list
 			mapParam.remove(MATERIAL_BOM_CODE);
 			List list = new ArrayList<>();
 			for (Map.Entry<String, String> entity : mapParam.entrySet()) {
@@ -166,10 +166,10 @@ public class MaterialService {
 				list.add(atnam);
 			}
 			bomHeadParam.setCharac(list);
-			//BOM接口的请求参数
+			//BOMæŽ¥å�£çš„è¯·æ±‚å�‚æ•°
 			String bomParam = JSONObject.toJSONString(bomHeadParam);
 				
-			//发送请求获取数据
+			//å�‘é€�è¯·æ±‚èŽ·å�–æ•°æ�®
 			String bb = HttpUtil.postbody(bomExplosionUrlStr, bomParam);
 			JSONObject parseObject = JSONObject.parseObject(bb);
 			Object message = parseObject.get("message");
@@ -184,11 +184,13 @@ public class MaterialService {
 				//
 				Bom bom = new Bom();
 				bom.setCode(obj.getString("matnr_stpo"));
-				bom.setParent(obj.getString("matnr"));
-				bom.setConfigurable(configurable);
+				bom.setParentCode(obj.getString("matnr"));
+				if(!configurable)
+					bom.setIsConfigurable(0);
 				bom.setPrice(StrToDouble.test(obj.getString("stprs")));
 				bom.setQuantity(StrToDouble.test(obj.getString("menge")));
-				bom.setMarked(marked);
+				if(!marked)
+					bom.setIsMarked(0);
 				bomList1.add(bom);
 			}
 			
@@ -202,11 +204,13 @@ public class MaterialService {
 				//
 				Bom bom = new Bom();
 				bom.setCode(obj.getString("matnr_stpo"));
-				bom.setParent(obj.getString("matnr"));
-				bom.setConfigurable(configurable);
+				bom.setParentCode(obj.getString("matnr"));
+				if(!configurable)
+					bom.setIsConfigurable(0);
 				bom.setPrice(StrToDouble.test(obj.getString("stprs")));
 				bom.setQuantity(StrToDouble.test(obj.getString("menge")));
-				bom.setMarked(marked);
+				if(!marked)
+					bom.setIsMarked(0);
 				bomList2.add(bom);
 			}
 			//
