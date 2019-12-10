@@ -19,6 +19,7 @@ import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.PaymentPlan;
 import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
+import com.qhc.bayern.service.FryeService;
 import com.qhc.bayern.service.OrderService;
 
 import java.util.List;
@@ -50,6 +51,9 @@ public class OrderController {
 	  
 	  @Autowired
 	  private OrderService orderService;
+	  
+	  @Autowired
+	  FryeService fryeService;
 	
 	  @ApiOperation(value="push a new order to SAP")
 	  @PostMapping(value = "new",produces = "application/json;charset=UTF-8")
@@ -134,11 +138,13 @@ public class OrderController {
 		@PutMapping(value = "callback")
 		@ResponseBody
 		public boolean bpmCallback(@RequestBody Map data) {
-			String status = String.valueOf(data.get("status"));
-			String sequenceNumber = String.valueOf(data.get("sequenceNumber"));
-			Double bodyDiscount = Double.valueOf(String.valueOf(data.get("bodyDiscount")));
-			Double unitDiscount = Double.valueOf(String.valueOf(data.get("unitDiscount")));
+//			String status = String.valueOf(data.get("status"));
+//			String sequenceNumber = String.valueOf(data.get("sequenceNumber"));
+//			Double bodyDiscount = Double.valueOf(String.valueOf(data.get("bodyDiscount")));
+//			Double unitDiscount = Double.valueOf(String.valueOf(data.get("unitDiscount")));
 			
+			String result = fryeService.putJason("/order/callback", data);
+			log.info("BPM Callback result : " + result);
 	    	return true;
 	    }
 	  

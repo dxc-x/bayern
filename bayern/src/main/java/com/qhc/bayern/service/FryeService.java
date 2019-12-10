@@ -51,7 +51,7 @@ public class FryeService<T> {
 		};
 	}
 
-	public void putJason(String path, T params) {
+	public String putJason(String path, T params) {
 
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		Mono<String> response = webClient.put().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
@@ -60,10 +60,10 @@ public class FryeService<T> {
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
 				.bodyToMono(String.class);
-		response.block();
+		return response.block();
 	}
 
-	public void postJason(String path, T params) {
+	public String postJason(String path, T params) {
 		
 		webClient = getBuilder().baseUrl(config.getFryeURL()).build();
 		Mono<String> response = webClient.post().uri(path).contentType(MediaType.APPLICATION_JSON).bodyValue(params)
@@ -72,7 +72,7 @@ public class FryeService<T> {
 				.onStatus(HttpStatus::is5xxServerError,
 						clientResponse -> Mono.error(new ExternalServerInternalException()))
 				.bodyToMono(String.class);
-		response.block();
+		return response.block();
 	}
 	/**
 	 * get last updated date by the business code defined in system
