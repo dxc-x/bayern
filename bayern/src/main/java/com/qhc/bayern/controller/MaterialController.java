@@ -42,18 +42,4 @@ public class MaterialController {
 		materialService.saveNewestMaterialsFromSap();
 //		materialService.uploadMaterials(temp);
 	}
-	
-	@ApiOperation(value="retrieve newest bomExplosion data from SAP and upload to DB")
-	@PostMapping(value = "material/bom",produces = "application/json;charset=UTF-8")
-	@ResponseStatus(HttpStatus.OK)
-	public Map<String, List<Bom>> getBomExplosion(
-			@RequestBody(required = true) Map<String, String> map
-			) throws Exception{
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("bom_code", "BG1FMM00000");
-//		map.put("D105", "1");
-//		map.put("D108", "2");
-		Map<String, List<Bom>> bomMap = materialService.getBomExplosion(map);
-		return bomMap;
-	}
 }

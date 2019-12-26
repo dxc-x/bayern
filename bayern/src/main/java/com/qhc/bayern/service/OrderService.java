@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.Parameter;
 import com.qhc.bayern.controller.entity.PaymentPlan;
-import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
 import com.qhc.bayern.util.HttpUtil;
 
 import reactor.core.publisher.Mono;
@@ -110,31 +109,4 @@ public class OrderService {
 
 	}
 	
-	/**
-	 *   获取销售订单数据并同步SAP
-	 *  TODO : SAP接口未提供
-	 * @param SapCreationOrder 销售订单详情
-	 */
-	public String orderCreationForSAP(SapCreationOrder sapCreationOrder) {
-		
-		String res = null;
-	
-		//1.ͬ同步SAP开单 没有数据 先注释
-		String sapStr = JSONObject.toJSONString(sapCreationOrder);
-		log.info("Order Creation Data: {}", sapStr);
-		try {
-			//没有数据先注释
-			res = HttpUtil.postbody(orderCreationUrl, sapStr);
-			
-		} catch (Exception e) {
-			log.error("ͬ同步SAP异常==>",e);
-			throw new RuntimeException("ͬ同步SAP异常");
-		}
-		
-		//2. 处理返回结果
-		log.info("SAP返回结果==>"+res);
-		
-		return "SUCCESS";
-		
-	}
 }

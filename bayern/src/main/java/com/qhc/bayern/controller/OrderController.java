@@ -18,7 +18,6 @@ import com.qhc.bayern.config.ApplicationConfig;
 import com.qhc.bayern.controller.entity.Form;
 import com.qhc.bayern.controller.entity.Order;
 import com.qhc.bayern.controller.entity.PaymentPlan;
-import com.qhc.bayern.controller.entity.sap.SapCreationOrder;
 import com.qhc.bayern.service.FryeService;
 import com.qhc.bayern.service.OrderService;
 
@@ -100,53 +99,5 @@ public class OrderController {
 		  List<PaymentPlan> lp = orderService.getPaymentFromSAP();
 		  orderService.savePaymentPlan(lp);
 	  }
-	  
-	  /**
-	      *组装销售订单数据并同步SAP
-	   * @param order 
-	   * @param form
-	   * @return
-	   * @throws Exception
-	   * TODO: 具体DTO未定义 
-	   * 
-	   */
-	  @ApiOperation(value="push a new order to SAP")
-	  @PostMapping(value = "create/sapOrder",produces = "application/json;charset=UTF-8")
-	  @ResponseStatus(HttpStatus.OK)
-	  public String orderCreationForSap(@RequestBody(required=true) @Valid SapCreationOrder sapCreationOrder) throws Exception
-	  {
-		  
-		    log.info("订单数据==>"+JSONObject.toJSONString(sapCreationOrder));
-		    // 获取流水号: sequenceNumber
-		  	String sapRes = orderService.orderCreationForSAP(sapCreationOrder);
-		  	log.info("SAP同步开单结果==>"+sapRes);
-		  	
-		  	return sapRes;
-		  
-	  }
-	    
-	    /**
-	     * 订单BPM回调接口
-     * <li>sequenceNumber</li>
-     * <li>status</li>
-     * <li>bodyDiscount</li>
-     * <li>unitDiscount</li>
-	     * 
-	     * @return
-	     */
-		@ApiOperation(value="查询订单类型", notes="查询订单类型")
-		@PutMapping(value = "callback")
-		@ResponseBody
-		public boolean bpmCallback(@RequestBody Map data) {
-//			String status = String.valueOf(data.get("status"));
-//			String sequenceNumber = String.valueOf(data.get("sequenceNumber"));
-//			Double bodyDiscount = Double.valueOf(String.valueOf(data.get("bodyDiscount")));
-//			Double unitDiscount = Double.valueOf(String.valueOf(data.get("unitDiscount")));
-			
-			String result = fryeService.putJason("/order/callback", data);
-			log.info("BPM Callback result : " + result);
-	    	return true;
-	    }
-	  
 	  
 }
